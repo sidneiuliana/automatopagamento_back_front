@@ -1,0 +1,597 @@
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["transação e9040088820250920235846576654733","e9040088820250920235846576654733"]
+DEBUG: 1758412786600.pdf: DEBUG: pagador: eduardo rodrigo barbosa ramos, destinatario: o recebedor setembro 2025 forma de pagamento ag 0193 cc 1041734-7 dados do recebedor para luiz augusto da silva, idTransacao: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: isProcessedConditionMet: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: 1758412786600.pdf: DEBUG: savePixTransaction called.
+DEBUG: 1758412786600.pdf: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: 1758412786600.pdf: DEBUG: SQL Values: ["1758412786600.pdf",20,"luiz augusto da silva","90400888202","2025-09-20","20:59:40","bco santander (brasil) s.a.","CPF","Processado","e9040088820250920235846576654733","setembro 2025","\n\n\nComprovante do Pix\n20/09/2025 - 20:59:40\nValor pago\nR$ 20,00\nInformação para o recebedor\nSetembro 2025\nForma de pagamento\nAg 0193 Cc 1041734-7\nDados do recebedor\nPara\nLuiz Augusto da Silva\nCPF\n***.881.268-**\nChave\nlu*****************52@gmail.com\nInstituição\nITAU UNIBANCO S.A.\nDados do pagador\nDe\nEduardo Rodrigo Barbosa Ramos\nCPF\n***.229.258-**\nInstituição\nBCO SANTANDER (BRASIL) S.A.\nComprovante do Pix1/2\n\n\nID/Transação\nE9040088820250920235846576654733\nData e hora da transação\n20/09/2025 - 20:59:40\nCódigo de autenticação\nA8A381D401745D888799614\n4004-3535 (Capitais e Regiões Metropolitanas)\n0800-702-3535 (Demais Localidades)\nSAC 0800-762-7777\nOuvidoria 0800-726-0332\nCentral de Atendimento Santander\nComprovante do Pix2/2","eduardo rodrigo barbosa ramos"]
+DEBUG: 2025-09-22_180143.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["id transação e003603052025092221014240fc4df0f","e003603052025092221014240fc4df0f"]
+DEBUG: 2025-09-22_180143.pdf: DEBUG: pagador: nome luciana aparecida ramos saccomano martins, destinatario: nome luiz augusto da silva, idTransacao: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: isProcessedConditionMet: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: 2025-09-22_180143.pdf: DEBUG: savePixTransaction called.
+DEBUG: 2025-09-22_180143.pdf: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: 2025-09-22_180143.pdf: DEBUG: SQL Values: ["2025-09-22_180143.pdf",20,"luiz augusto da silva","luizaugustodasilva352@gmail.com","2025-09-22","18:01:36","Caixa Econômica Federal","Email","Processado","e003603052025092221014240fc4df0f",null,"\n\nComprovante de Pix enviado\nPix realizado com sucesso!\nDados do recebedor\nNome\nLUIZ AUGUSTO DA SILVA\nCPF\n***.881.268-**\nInstituição\nITAÚ UNIBANCO S.A.\nDados do pagador\nNome\nLUCIANA APARECIDA RAMOS SACCOMANO MARTINS\nCPF\n***.373.018-**\nInstituição\nCAIXA ECONÔMICA FEDERAL\nDados da transação\nSituação\nEfetivado\nValor\n20,00\nValorData\nR$ 20,00\n22/09/2025\n18:01:36\n\nData/ Hora\n22/09/2025 - 18:01:36\nID transação\nE003603052025092221014240fc4df0f\nCódigo da operação\n53004457328\nChave de segurança\n9GZL5704Y6573KZM\nChave Pix\nluizaugustodasilva352@gmail.com\n\nVocê poderá consultar futuramente essa e outras transações no item “Minhas Transações”, opção\n“Consultas - Comprovantes”.\n  Novo Pix\n\n  Favoritar\n\n  Compartilhar\nVoltar\nCaso tenha dúvidas ou não reconheça esta transação, entre em contato com o Alô CAIXA e informe o ID da Transação\npresente neste comprovante.\nAlô CAIXA: 4004 0104 (Capitais e Regiões Metropolitanas)\nAlô CAIXA: 0800 104 0 104 (Demais regiões)\nPessoas com deficiência auditiva: 0800 726 2492\nSAC CAIXA: 0800 726 0101\nOuvidoria: 0800 725 7474","luciana aparecida ramos saccomano martins"]
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /protocolo\s+([a-zA-Z0-9\-]+)/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: pagador: luiz fernando s colussi *, destinatario: gabriella g silva, idTransacao: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: isProcessedConditionMet: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: Status definido como: PDF Escaneado - Processamento Manual Necessário
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: savePixTransaction called.
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: SQL Values: ["Comprovante_23-09-2025_065915.pdf",50,"gabriella g silva","58184756895","2025-09-23","06:59:02","Banco do Brasil","CPF","PDF Escaneado - Processamento Manual Necessário",null,null,"\n\n\nComprovante BB\n\nPix Enviado\nR$ 50,00\n23/09/2025 às 06:59:02\nRecebedor\nGabriella G Silva\nCPF\n***.847.568-**\nAgência\n0001\nConta\n1729750572\nInstituição\n18236120 NU PAGAMENTOS - IP\nTipo de conta\nConta Pagamento\nChave Pix\n58184756895\nPagador\nLuiz Fernando S Colussi *\nCPF\n***.210.728.**\nAgência\n3652-8\nConta\n6484769-1\nInstituição\n00000000 BCO DO BRASIL S.A.\nInformações adicionais\nID: E0000000020250923095849085388250\nDocumento: 000000000092301\nAutenticação SISBB: 0.0B9.C02.CF4.843.F42\nNotificação enviada em: 23/09/2025 às 06:59:03\nCentral de Relacionamento:\u00014004 0001 Capitais e regiões metropolitanas.\u00010800 729 0001 Demais localidades.\u0001SAC: 0800 729 0722.\u0001Ouvidoria: 0800 729 5678.\u0001Atendimento a deficientes auditivo\nEsse é o novo comprovante do Banco do Brasil.\u0001Mais clareza nas informações, facilitando sua vida.","luiz fernando s colussi *"]
+DEBUG: Sicoob comprovante (16-09-2025_18-59-25).pdf: DEBUG: savePixTransaction called.
+DEBUG: Sicoob comprovante (16-09-2025_18-59-25).pdf: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: Sicoob comprovante (16-09-2025_18-59-25).pdf: DEBUG: SQL Values: ["Sicoob comprovante (16-09-2025_18-59-25).pdf",null,null,null,"2025-09-16","16:09:20","Sicoob",null,"PDF Escaneado - Processamento Manual Necessário",null,"PDF com pouco texto extraído. Pode ser necessário processamento manual ou OCR adicional.","\n\n",null]
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["transação e9040088820250920235846576654733","e9040088820250920235846576654733"]
+DEBUG: 1758412786600.pdf: DEBUG: pagador: eduardo rodrigo barbosa ramos, destinatario: o recebedor setembro 2025 forma de pagamento ag 0193 cc 1041734-7 dados do recebedor para luiz augusto da silva, idTransacao: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: isProcessedConditionMet: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: 1758412786600.pdf: DEBUG: savePixTransaction called.
+DEBUG: 1758412786600.pdf: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: 1758412786600.pdf: DEBUG: SQL Values: ["1758412786600.pdf",20,"luiz augusto da silva","90400888202","2025-09-20","20:59:40","bco santander (brasil) s.a.","CPF","Processado","e9040088820250920235846576654733","setembro 2025","\n\n\nComprovante do Pix\n20/09/2025 - 20:59:40\nValor pago\nR$ 20,00\nInformação para o recebedor\nSetembro 2025\nForma de pagamento\nAg 0193 Cc 1041734-7\nDados do recebedor\nPara\nLuiz Augusto da Silva\nCPF\n***.881.268-**\nChave\nlu*****************52@gmail.com\nInstituição\nITAU UNIBANCO S.A.\nDados do pagador\nDe\nEduardo Rodrigo Barbosa Ramos\nCPF\n***.229.258-**\nInstituição\nBCO SANTANDER (BRASIL) S.A.\nComprovante do Pix1/2\n\n\nID/Transação\nE9040088820250920235846576654733\nData e hora da transação\n20/09/2025 - 20:59:40\nCódigo de autenticação\nA8A381D401745D888799614\n4004-3535 (Capitais e Regiões Metropolitanas)\n0800-702-3535 (Demais Localidades)\nSAC 0800-762-7777\nOuvidoria 0800-726-0332\nCentral de Atendimento Santander\nComprovante do Pix2/2","eduardo rodrigo barbosa ramos"]
+DEBUG: 2025-09-22_180143.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["id transação e003603052025092221014240fc4df0f","e003603052025092221014240fc4df0f"]
+DEBUG: 2025-09-22_180143.pdf: DEBUG: pagador: nome luciana aparecida ramos saccomano martins, destinatario: nome luiz augusto da silva, idTransacao: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: isProcessedConditionMet: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: 2025-09-22_180143.pdf: DEBUG: savePixTransaction called.
+DEBUG: 2025-09-22_180143.pdf: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: 2025-09-22_180143.pdf: DEBUG: SQL Values: ["2025-09-22_180143.pdf",20,"luiz augusto da silva","luizaugustodasilva352@gmail.com","2025-09-22","18:01:36","Caixa Econômica Federal","Email","Processado","e003603052025092221014240fc4df0f",null,"\n\nComprovante de Pix enviado\nPix realizado com sucesso!\nDados do recebedor\nNome\nLUIZ AUGUSTO DA SILVA\nCPF\n***.881.268-**\nInstituição\nITAÚ UNIBANCO S.A.\nDados do pagador\nNome\nLUCIANA APARECIDA RAMOS SACCOMANO MARTINS\nCPF\n***.373.018-**\nInstituição\nCAIXA ECONÔMICA FEDERAL\nDados da transação\nSituação\nEfetivado\nValor\n20,00\nValorData\nR$ 20,00\n22/09/2025\n18:01:36\n\nData/ Hora\n22/09/2025 - 18:01:36\nID transação\nE003603052025092221014240fc4df0f\nCódigo da operação\n53004457328\nChave de segurança\n9GZL5704Y6573KZM\nChave Pix\nluizaugustodasilva352@gmail.com\n\nVocê poderá consultar futuramente essa e outras transações no item “Minhas Transações”, opção\n“Consultas - Comprovantes”.\n  Novo Pix\n\n  Favoritar\n\n  Compartilhar\nVoltar\nCaso tenha dúvidas ou não reconheça esta transação, entre em contato com o Alô CAIXA e informe o ID da Transação\npresente neste comprovante.\nAlô CAIXA: 4004 0104 (Capitais e Regiões Metropolitanas)\nAlô CAIXA: 0800 104 0 104 (Demais regiões)\nPessoas com deficiência auditiva: 0800 726 2492\nSAC CAIXA: 0800 726 0101\nOuvidoria: 0800 725 7474","luciana aparecida ramos saccomano martins"]
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /protocolo\s+([a-zA-Z0-9\-]+)/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: pagador: luiz fernando s colussi *, destinatario: gabriella g silva, idTransacao: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: isProcessedConditionMet: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: Status definido como: PDF Escaneado - Processamento Manual Necessário
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: savePixTransaction called.
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: SQL Values: ["Comprovante_23-09-2025_065915.pdf",50,"gabriella g silva","58184756895","2025-09-23","06:59:02","Banco do Brasil","CPF","PDF Escaneado - Processamento Manual Necessário",null,null,"\n\n\nComprovante BB\n\nPix Enviado\nR$ 50,00\n23/09/2025 às 06:59:02\nRecebedor\nGabriella G Silva\nCPF\n***.847.568-**\nAgência\n0001\nConta\n1729750572\nInstituição\n18236120 NU PAGAMENTOS - IP\nTipo de conta\nConta Pagamento\nChave Pix\n58184756895\nPagador\nLuiz Fernando S Colussi *\nCPF\n***.210.728.**\nAgência\n3652-8\nConta\n6484769-1\nInstituição\n00000000 BCO DO BRASIL S.A.\nInformações adicionais\nID: E0000000020250923095849085388250\nDocumento: 000000000092301\nAutenticação SISBB: 0.0B9.C02.CF4.843.F42\nNotificação enviada em: 23/09/2025 às 06:59:03\nCentral de Relacionamento:\u00014004 0001 Capitais e regiões metropolitanas.\u00010800 729 0001 Demais localidades.\u0001SAC: 0800 729 0722.\u0001Ouvidoria: 0800 729 5678.\u0001Atendimento a deficientes auditivo\nEsse é o novo comprovante do Banco do Brasil.\u0001Mais clareza nas informações, facilitando sua vida.","luiz fernando s colussi *"]
+DEBUG: Sicoob comprovante (16-09-2025_18-59-25).pdf: DEBUG: savePixTransaction called.
+DEBUG: Sicoob comprovante (16-09-2025_18-59-25).pdf: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions_no_process (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: Sicoob comprovante (16-09-2025_18-59-25).pdf: DEBUG: SQL Values: ["Sicoob comprovante (16-09-2025_18-59-25).pdf",null,null,null,"2025-09-16","16:09:20","Sicoob",null,"PDF Escaneado - Processamento Manual Necessário",null,"PDF com pouco texto extraído. Pode ser necessário processamento manual ou OCR adicional.","\n\n",null]
+DEBUG: Sicoob comprovante (16-09-2025_18-59-25).pdf: DEBUG: savePixTransaction called.
+DEBUG: Sicoob comprovante (16-09-2025_18-59-25).pdf: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions_no_process (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: Sicoob comprovante (16-09-2025_18-59-25).pdf: DEBUG: SQL Values: ["Sicoob comprovante (16-09-2025_18-59-25).pdf",null,null,null,"2025-09-16","16:09:20","Sicoob",null,"PDF Escaneado - Processamento Manual Necessário",null,"PDF com pouco texto extraído. Pode ser necessário processamento manual ou OCR adicional.","\n\n",null]
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["transação e9040088820250920235846576654733","e9040088820250920235846576654733"]
+DEBUG: 1758412786600.pdf: DEBUG: pagador: eduardo rodrigo barbosa ramos, destinatario: o recebedor setembro 2025 forma de pagamento ag 0193 cc 1041734-7 dados do recebedor para luiz augusto da silva, idTransacao: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: isProcessedConditionMet: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: 1758412786600.pdf: DEBUG: savePixTransaction called.
+DEBUG: 1758412786600.pdf: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: 1758412786600.pdf: DEBUG: SQL Values: ["1758412786600.pdf",20,"luiz augusto da silva","90400888202","2025-09-20","20:59:40","bco santander (brasil) s.a.","CPF","Processado","e9040088820250920235846576654733","setembro 2025","\n\n\nComprovante do Pix\n20/09/2025 - 20:59:40\nValor pago\nR$ 20,00\nInformação para o recebedor\nSetembro 2025\nForma de pagamento\nAg 0193 Cc 1041734-7\nDados do recebedor\nPara\nLuiz Augusto da Silva\nCPF\n***.881.268-**\nChave\nlu*****************52@gmail.com\nInstituição\nITAU UNIBANCO S.A.\nDados do pagador\nDe\nEduardo Rodrigo Barbosa Ramos\nCPF\n***.229.258-**\nInstituição\nBCO SANTANDER (BRASIL) S.A.\nComprovante do Pix1/2\n\n\nID/Transação\nE9040088820250920235846576654733\nData e hora da transação\n20/09/2025 - 20:59:40\nCódigo de autenticação\nA8A381D401745D888799614\n4004-3535 (Capitais e Regiões Metropolitanas)\n0800-702-3535 (Demais Localidades)\nSAC 0800-762-7777\nOuvidoria 0800-726-0332\nCentral de Atendimento Santander\nComprovante do Pix2/2","eduardo rodrigo barbosa ramos"]
+DEBUG: 2025-09-22_180143.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["id transação e003603052025092221014240fc4df0f","e003603052025092221014240fc4df0f"]
+DEBUG: 2025-09-22_180143.pdf: DEBUG: pagador: nome luciana aparecida ramos saccomano martins, destinatario: nome luiz augusto da silva, idTransacao: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: isProcessedConditionMet: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: 2025-09-22_180143.pdf: DEBUG: savePixTransaction called.
+DEBUG: 2025-09-22_180143.pdf: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: 2025-09-22_180143.pdf: DEBUG: SQL Values: ["2025-09-22_180143.pdf",20,"luiz augusto da silva","luizaugustodasilva352@gmail.com","2025-09-22","18:01:36","Caixa Econômica Federal","Email","Processado","e003603052025092221014240fc4df0f",null,"\n\nComprovante de Pix enviado\nPix realizado com sucesso!\nDados do recebedor\nNome\nLUIZ AUGUSTO DA SILVA\nCPF\n***.881.268-**\nInstituição\nITAÚ UNIBANCO S.A.\nDados do pagador\nNome\nLUCIANA APARECIDA RAMOS SACCOMANO MARTINS\nCPF\n***.373.018-**\nInstituição\nCAIXA ECONÔMICA FEDERAL\nDados da transação\nSituação\nEfetivado\nValor\n20,00\nValorData\nR$ 20,00\n22/09/2025\n18:01:36\n\nData/ Hora\n22/09/2025 - 18:01:36\nID transação\nE003603052025092221014240fc4df0f\nCódigo da operação\n53004457328\nChave de segurança\n9GZL5704Y6573KZM\nChave Pix\nluizaugustodasilva352@gmail.com\n\nVocê poderá consultar futuramente essa e outras transações no item “Minhas Transações”, opção\n“Consultas - Comprovantes”.\n  Novo Pix\n\n  Favoritar\n\n  Compartilhar\nVoltar\nCaso tenha dúvidas ou não reconheça esta transação, entre em contato com o Alô CAIXA e informe o ID da Transação\npresente neste comprovante.\nAlô CAIXA: 4004 0104 (Capitais e Regiões Metropolitanas)\nAlô CAIXA: 0800 104 0 104 (Demais regiões)\nPessoas com deficiência auditiva: 0800 726 2492\nSAC CAIXA: 0800 726 0101\nOuvidoria: 0800 725 7474","luciana aparecida ramos saccomano martins"]
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /protocolo\s+([a-zA-Z0-9\-]+)/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: pagador: luiz fernando s colussi *, destinatario: gabriella g silva, idTransacao: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: isProcessedConditionMet: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: Status definido como: PDF Escaneado - Processamento Manual Necessário
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: savePixTransaction called.
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: SQL Values: ["Comprovante_23-09-2025_065915.pdf",50,"gabriella g silva","58184756895","2025-09-23","06:59:02","Banco do Brasil","CPF","PDF Escaneado - Processamento Manual Necessário",null,null,"\n\n\nComprovante BB\n\nPix Enviado\nR$ 50,00\n23/09/2025 às 06:59:02\nRecebedor\nGabriella G Silva\nCPF\n***.847.568-**\nAgência\n0001\nConta\n1729750572\nInstituição\n18236120 NU PAGAMENTOS - IP\nTipo de conta\nConta Pagamento\nChave Pix\n58184756895\nPagador\nLuiz Fernando S Colussi *\nCPF\n***.210.728.**\nAgência\n3652-8\nConta\n6484769-1\nInstituição\n00000000 BCO DO BRASIL S.A.\nInformações adicionais\nID: E0000000020250923095849085388250\nDocumento: 000000000092301\nAutenticação SISBB: 0.0B9.C02.CF4.843.F42\nNotificação enviada em: 23/09/2025 às 06:59:03\nCentral de Relacionamento:\u00014004 0001 Capitais e regiões metropolitanas.\u00010800 729 0001 Demais localidades.\u0001SAC: 0800 729 0722.\u0001Ouvidoria: 0800 729 5678.\u0001Atendimento a deficientes auditivo\nEsse é o novo comprovante do Banco do Brasil.\u0001Mais clareza nas informações, facilitando sua vida.","luiz fernando s colussi *"]
+DEBUG: Imagem do WhatsApp de 2025-09-21 à(s) 00.32.43_d0c6da83.jpg: DEBUG: Nubank idTransacaoMatch: ["1d da transação: e18236120202509210332s1030198b89","e18236120202509210332s1030198b89"]
+DEBUG: Imagem do WhatsApp de 2025-09-21 à(s) 00.32.43_d0c6da83.jpg: DEBUG: savePixTransaction called.
+DEBUG: Imagem do WhatsApp de 2025-09-21 à(s) 00.32.43_d0c6da83.jpg: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: Imagem do WhatsApp de 2025-09-21 à(s) 00.32.43_d0c6da83.jpg: DEBUG: SQL Values: ["Imagem do WhatsApp de 2025-09-21 à(s) 00.32.43_d0c6da83.jpg",20,"luiz augusto da silva",null,"2025-09-21","00:32:13","itau unibanco s.a.",null,"PDF Escaneado - Processamento Manual Necessário","e18236120202509210332s1030198b89","PDF com pouco texto extraído. Pode ser necessário processamento manual ou OCR adicional.","nU,\n\no\nComprovante de\ntransferência\n21 SET 2025 - 00:32:13\nValor R$ 20,00\nTipo de transferência Pix\nDestino\nNome Luiz Augusto da Silva\nCPF . BB1.268-\nInstituição ITAU UNIBANCO S.A.\nAgência 0531\nConta 36085-7\nTipo de conta Conta de pagamentos\nOrigem\nNome Joao Vitor de Araujo\nInstituição NU PAGAMENTOS - IP\nAgência 0001\nConta 29393555-6\nCPF n B41.608-»\nNu Pagamentos S.A. - Instituição de\nPagamento\nCNP) 18.236.120/0001-58\n1D da transação:\nE18236120202509210332s1030198b89\nEstamos aqui para ajudar se você tiver alguma dúvida.\nMeajuda >\nOuvidoria: 0800 887 0463 |\nouvidoriaeênubank.com.br (Atendimento das 8h às 18h\nem dias úteis).\n","joao vitor de araujo"]
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: General idTransacao match for pattern /protocolo\s+([a-zA-Z0-9\-]+)/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: pagador: null, destinatario: luiz augusto da silva, idTransacao: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: isProcessedConditionMet: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: Status definido como: PDF Escaneado - Processamento Manual Necessário
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: savePixTransaction called.
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions_no_process (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: SQL Values: ["Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg",40,"luiz augusto da silva","85617012025","2025-09-22","21:31:30","Banco Inter","CPF","PDF Escaneado - Processamento Manual Necessário",null,null,"é\nComprovante de envio de Pix\n22/09/2025 às 21:31:30\n\nValor da transferência\nR$ 40,00\nTipo de transferência\nPix\nCódigo da transação Pagbank\n520a4be7-b99f-48d0-affc-013bb5afbe23\nCódigo da transação Pix\nEO8561701202509230031UFB3IDCYORW\nDe\nRicardo Alexandre Ribeiro\nCPF\n**+* 751.708-**\nInstituição\nPagBank (PagSeguro Internet Instituição\nde Pagamento S.A.)\nPara\nLUIZ AUGUSTO DA SILVA\nCPF\n*** 881.268-**\nInstituição\nITAÚ UNIBANCO S.A.\nChave\nluizaugustodasilva352(Ogmail.com\nPara dúvidas, ligue 4003-1775 (capitais e\nregiões metropolitanas) ou 0800-;)28-2174\n(demais localidades, exceto celular). Para falar\ncom a Ouvidoria ligue 0800-728-2167.\n",null]
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-38-25-510Z: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-38-25-510Z: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-38-25-510Z: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-38-25-510Z: DEBUG: General idTransacao match for pattern /protocolo\s+([a-zA-Z0-9\-]+)/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-38-25-510Z: DEBUG: pagador: null, destinatario: luiz augusto da silva, idTransacao: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-38-25-510Z: DEBUG: isProcessedConditionMet: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-38-25-510Z: DEBUG: Status definido como: PDF Escaneado - Processamento Manual Necessário
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-44-58-456Z: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-44-58-456Z: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-44-58-456Z: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-44-58-456Z: DEBUG: General idTransacao match for pattern /protocolo\s+([a-zA-Z0-9\-]+)/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-44-58-456Z: DEBUG: pagador: null, destinatario: luiz augusto da silva, idTransacao: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-44-58-456Z: DEBUG: isProcessedConditionMet: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-44-58-456Z: DEBUG: Status definido como: PDF Escaneado - Processamento Manual Necessário
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-50-17-948Z: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-50-17-948Z: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-50-17-948Z: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-50-17-948Z: DEBUG: General idTransacao match for pattern /protocolo\s+([a-zA-Z0-9\-]+)/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-50-17-948Z: DEBUG: pagador: null, destinatario: luiz augusto da silva, idTransacao: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-50-17-948Z: DEBUG: isProcessedConditionMet: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-50-17-948Z: DEBUG: Status definido como: PDF Escaneado - Processamento Manual Necessário
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-54-22-990Z: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-54-22-990Z: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-54-22-990Z: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-54-22-990Z: DEBUG: General idTransacao match for pattern /protocolo\s+([a-zA-Z0-9\-]+)/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-54-22-990Z: DEBUG: pagador: null, destinatario: luiz augusto da silva, idTransacao: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-54-22-990Z: DEBUG: isProcessedConditionMet: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-54-22-990Z: DEBUG: Status definido como: PDF Escaneado - Processamento Manual Necessário
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-58-22-496Z: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-58-22-496Z: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-58-22-496Z: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-58-22-496Z: DEBUG: General idTransacao match for pattern /protocolo\s+([a-zA-Z0-9\-]+)/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-58-22-496Z: DEBUG: pagador: null, destinatario: luiz augusto da silva, idTransacao: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-58-22-496Z: DEBUG: isProcessedConditionMet: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 Ã (s) 21.33.18_cf1d3826.jpg_2025-09-25T19-58-22-496Z: DEBUG: Status definido como: PDF Escaneado - Processamento Manual Necessário
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["transação e9040088820250920235846576654733","e9040088820250920235846576654733"]
+DEBUG: 1758412786600.pdf: DEBUG: pagador: eduardo rodrigo barbosa ramos, destinatario: o recebedor setembro 2025 forma de pagamento ag 0193 cc 1041734-7 dados do recebedor para luiz augusto da silva, idTransacao: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: isProcessedConditionMet: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /protocolo\s+([a-zA-Z0-9\-]+)/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: pagador: luiz fernando s colussi *, destinatario: gabriella g silva, idTransacao: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: isProcessedConditionMet: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: Status definido como: PDF Escaneado - Processamento Manual Necessário
+DEBUG: Imagem do WhatsApp de 2025-09-21 à(s) 00.32.43_d0c6da83.jpg: DEBUG: Nubank idTransacaoMatch: ["1d da transação: e18236120202509210332s1030198b89","e18236120202509210332s1030198b89"]
+DEBUG: 2025-09-22_180143.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["id transação e003603052025092221014240fc4df0f","e003603052025092221014240fc4df0f"]
+DEBUG: 2025-09-22_180143.pdf: DEBUG: pagador: nome luciana aparecida ramos saccomano martins, destinatario: nome luiz augusto da silva, idTransacao: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: isProcessedConditionMet: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: Sicoob comprovante (16-09-2025_18-59-25).pdf: DEBUG: savePixTransaction called.
+DEBUG: Sicoob comprovante (16-09-2025_18-59-25).pdf: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions_no_process (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: Sicoob comprovante (16-09-2025_18-59-25).pdf: DEBUG: SQL Values: ["Sicoob comprovante (16-09-2025_18-59-25).pdf",null,null,null,"2025-09-16","16:09:20","Sicoob",null,"PDF Escaneado - Processamento Manual Necessário",null,"PDF com pouco texto extraído. Pode ser necessário processamento manual ou OCR adicional.","\n\n",null]
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: General idTransacao match for pattern /protocolo\s+([a-zA-Z0-9\-]+)/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: pagador: null, destinatario: luiz augusto da silva, idTransacao: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: isProcessedConditionMet: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: Status definido como: PDF Escaneado - Processamento Manual Necessário
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: savePixTransaction called.
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions_no_process (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: SQL Values: ["Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg",40,"luiz augusto da silva","85617012025","2025-09-22","21:31:30","Banco Inter","CPF","PDF Escaneado - Processamento Manual Necessário",null,null,"é\nComprovante de envio de Pix\n22/09/2025 às 21:31:30\n\nValor da transferência\nR$ 40,00\nTipo de transferência\nPix\nCódigo da transação Pagbank\n520a4be7-b99f-48d0-affc-013bb5afbe23\nCódigo da transação Pix\nEO8561701202509230031UFB3IDCYORW\nDe\nRicardo Alexandre Ribeiro\nCPF\n**+* 751.708-**\nInstituição\nPagBank (PagSeguro Internet Instituição\nde Pagamento S.A.)\nPara\nLUIZ AUGUSTO DA SILVA\nCPF\n*** 881.268-**\nInstituição\nITAÚ UNIBANCO S.A.\nChave\nluizaugustodasilva352(Ogmail.com\nPara dúvidas, ligue 4003-1775 (capitais e\nregiões metropolitanas) ou 0800-;)28-2174\n(demais localidades, exceto celular). Para falar\ncom a Ouvidoria ligue 0800-728-2167.\n",null]
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["transação e9040088820250920235846576654733","e9040088820250920235846576654733"]
+DEBUG: 1758412786600.pdf: DEBUG: pagador: eduardo rodrigo barbosa ramos, destinatario: o recebedor setembro 2025 forma de pagamento ag 0193 cc 1041734-7 dados do recebedor para luiz augusto da silva, idTransacao: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: isProcessedConditionMet: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: 1758412786600.pdf: DEBUG: savePixTransaction called.
+DEBUG: 1758412786600.pdf: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: 1758412786600.pdf: DEBUG: SQL Values: ["1758412786600.pdf",20,"luiz augusto da silva","90400888202","2025-09-20","20:59:40","bco santander (brasil) s.a.","CPF","Processado","e9040088820250920235846576654733","setembro 2025","\n\n\nComprovante do Pix\n20/09/2025 - 20:59:40\nValor pago\nR$ 20,00\nInformação para o recebedor\nSetembro 2025\nForma de pagamento\nAg 0193 Cc 1041734-7\nDados do recebedor\nPara\nLuiz Augusto da Silva\nCPF\n***.881.268-**\nChave\nlu*****************52@gmail.com\nInstituição\nITAU UNIBANCO S.A.\nDados do pagador\nDe\nEduardo Rodrigo Barbosa Ramos\nCPF\n***.229.258-**\nInstituição\nBCO SANTANDER (BRASIL) S.A.\nComprovante do Pix1/2\n\n\nID/Transação\nE9040088820250920235846576654733\nData e hora da transação\n20/09/2025 - 20:59:40\nCódigo de autenticação\nA8A381D401745D888799614\n4004-3535 (Capitais e Regiões Metropolitanas)\n0800-702-3535 (Demais Localidades)\nSAC 0800-762-7777\nOuvidoria 0800-726-0332\nCentral de Atendimento Santander\nComprovante do Pix2/2","eduardo rodrigo barbosa ramos"]
+DEBUG: 2025-09-22_180143.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["id transação e003603052025092221014240fc4df0f","e003603052025092221014240fc4df0f"]
+DEBUG: 2025-09-22_180143.pdf: DEBUG: pagador: nome luciana aparecida ramos saccomano martins, destinatario: nome luiz augusto da silva, idTransacao: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: isProcessedConditionMet: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: 2025-09-22_180143.pdf: DEBUG: savePixTransaction called.
+DEBUG: 2025-09-22_180143.pdf: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: 2025-09-22_180143.pdf: DEBUG: SQL Values: ["2025-09-22_180143.pdf",20,"luiz augusto da silva","luizaugustodasilva352@gmail.com","2025-09-22","18:01:36","Caixa Econômica Federal","Email","Processado","e003603052025092221014240fc4df0f",null,"\n\nComprovante de Pix enviado\nPix realizado com sucesso!\nDados do recebedor\nNome\nLUIZ AUGUSTO DA SILVA\nCPF\n***.881.268-**\nInstituição\nITAÚ UNIBANCO S.A.\nDados do pagador\nNome\nLUCIANA APARECIDA RAMOS SACCOMANO MARTINS\nCPF\n***.373.018-**\nInstituição\nCAIXA ECONÔMICA FEDERAL\nDados da transação\nSituação\nEfetivado\nValor\n20,00\nValorData\nR$ 20,00\n22/09/2025\n18:01:36\n\nData/ Hora\n22/09/2025 - 18:01:36\nID transação\nE003603052025092221014240fc4df0f\nCódigo da operação\n53004457328\nChave de segurança\n9GZL5704Y6573KZM\nChave Pix\nluizaugustodasilva352@gmail.com\n\nVocê poderá consultar futuramente essa e outras transações no item “Minhas Transações”, opção\n“Consultas - Comprovantes”.\n  Novo Pix\n\n  Favoritar\n\n  Compartilhar\nVoltar\nCaso tenha dúvidas ou não reconheça esta transação, entre em contato com o Alô CAIXA e informe o ID da Transação\npresente neste comprovante.\nAlô CAIXA: 4004 0104 (Capitais e Regiões Metropolitanas)\nAlô CAIXA: 0800 104 0 104 (Demais regiões)\nPessoas com deficiência auditiva: 0800 726 2492\nSAC CAIXA: 0800 726 0101\nOuvidoria: 0800 725 7474","luciana aparecida ramos saccomano martins"]
+DEBUG: Sicoob comprovante (16-09-2025_18-59-25).pdf: DEBUG: savePixTransaction called.
+DEBUG: Sicoob comprovante (16-09-2025_18-59-25).pdf: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions_no_process (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: Sicoob comprovante (16-09-2025_18-59-25).pdf: DEBUG: SQL Values: ["Sicoob comprovante (16-09-2025_18-59-25).pdf",null,null,null,"2025-09-16","16:09:20","Sicoob",null,"PDF Escaneado - Processamento Manual Necessário",null,"PDF com pouco texto extraído. Pode ser necessário processamento manual ou OCR adicional.","\n\n",null]
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /protocolo\s+([a-zA-Z0-9\-]+)/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: pagador: luiz fernando s colussi *, destinatario: gabriella g silva, idTransacao: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: isProcessedConditionMet: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: Status definido como: PDF Escaneado - Processamento Manual Necessário
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: savePixTransaction called.
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: SQL Values: ["Comprovante_23-09-2025_065915.pdf",50,"gabriella g silva","58184756895","2025-09-23","06:59:02","Banco do Brasil","CPF","PDF Escaneado - Processamento Manual Necessário",null,null,"\n\n\nComprovante BB\n\nPix Enviado\nR$ 50,00\n23/09/2025 às 06:59:02\nRecebedor\nGabriella G Silva\nCPF\n***.847.568-**\nAgência\n0001\nConta\n1729750572\nInstituição\n18236120 NU PAGAMENTOS - IP\nTipo de conta\nConta Pagamento\nChave Pix\n58184756895\nPagador\nLuiz Fernando S Colussi *\nCPF\n***.210.728.**\nAgência\n3652-8\nConta\n6484769-1\nInstituição\n00000000 BCO DO BRASIL S.A.\nInformações adicionais\nID: E0000000020250923095849085388250\nDocumento: 000000000092301\nAutenticação SISBB: 0.0B9.C02.CF4.843.F42\nNotificação enviada em: 23/09/2025 às 06:59:03\nCentral de Relacionamento:\u00014004 0001 Capitais e regiões metropolitanas.\u00010800 729 0001 Demais localidades.\u0001SAC: 0800 729 0722.\u0001Ouvidoria: 0800 729 5678.\u0001Atendimento a deficientes auditivo\nEsse é o novo comprovante do Banco do Brasil.\u0001Mais clareza nas informações, facilitando sua vida.","luiz fernando s colussi *"]
+DEBUG: Imagem do WhatsApp de 2025-09-21 à(s) 00.32.43_d0c6da83.jpg: DEBUG: Nubank idTransacaoMatch: ["1d da transação: e18236120202509210332s1030198b89","e18236120202509210332s1030198b89"]
+DEBUG: Imagem do WhatsApp de 2025-09-21 à(s) 00.32.43_d0c6da83.jpg: DEBUG: savePixTransaction called.
+DEBUG: Imagem do WhatsApp de 2025-09-21 à(s) 00.32.43_d0c6da83.jpg: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: Imagem do WhatsApp de 2025-09-21 à(s) 00.32.43_d0c6da83.jpg: DEBUG: SQL Values: ["Imagem do WhatsApp de 2025-09-21 à(s) 00.32.43_d0c6da83.jpg",20,"luiz augusto da silva",null,"2025-09-21","00:32:13","itau unibanco s.a.",null,"PDF Escaneado - Processamento Manual Necessário","e18236120202509210332s1030198b89","PDF com pouco texto extraído. Pode ser necessário processamento manual ou OCR adicional.","nU,\n\no\nComprovante de\ntransferência\n21 SET 2025 - 00:32:13\nValor R$ 20,00\nTipo de transferência Pix\nDestino\nNome Luiz Augusto da Silva\nCPF . BB1.268-\nInstituição ITAU UNIBANCO S.A.\nAgência 0531\nConta 36085-7\nTipo de conta Conta de pagamentos\nOrigem\nNome Joao Vitor de Araujo\nInstituição NU PAGAMENTOS - IP\nAgência 0001\nConta 29393555-6\nCPF n B41.608-»\nNu Pagamentos S.A. - Instituição de\nPagamento\nCNP) 18.236.120/0001-58\n1D da transação:\nE18236120202509210332s1030198b89\nEstamos aqui para ajudar se você tiver alguma dúvida.\nMeajuda >\nOuvidoria: 0800 887 0463 |\nouvidoriaeênubank.com.br (Atendimento das 8h às 18h\nem dias úteis).\n","joao vitor de araujo"]
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: General idTransacao match for pattern /protocolo\s+([a-zA-Z0-9\-]+)/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: pagador: null, destinatario: luiz augusto da silva, idTransacao: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: isProcessedConditionMet: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: Status definido como: PDF Escaneado - Processamento Manual Necessário
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: savePixTransaction called.
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions_no_process (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: SQL Values: ["Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg",40,"luiz augusto da silva","85617012025","2025-09-22","21:31:30","Banco Inter","CPF","PDF Escaneado - Processamento Manual Necessário",null,null,"é\nComprovante de envio de Pix\n22/09/2025 às 21:31:30\n\nValor da transferência\nR$ 40,00\nTipo de transferência\nPix\nCódigo da transação Pagbank\n520a4be7-b99f-48d0-affc-013bb5afbe23\nCódigo da transação Pix\nEO8561701202509230031UFB3IDCYORW\nDe\nRicardo Alexandre Ribeiro\nCPF\n**+* 751.708-**\nInstituição\nPagBank (PagSeguro Internet Instituição\nde Pagamento S.A.)\nPara\nLUIZ AUGUSTO DA SILVA\nCPF\n*** 881.268-**\nInstituição\nITAÚ UNIBANCO S.A.\nChave\nluizaugustodasilva352(Ogmail.com\nPara dúvidas, ligue 4003-1775 (capitais e\nregiões metropolitanas) ou 0800-;)28-2174\n(demais localidades, exceto celular). Para falar\ncom a Ouvidoria ligue 0800-728-2167.\n",null]
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["transação e9040088820250920235846576654733","e9040088820250920235846576654733"]
+DEBUG: 1758412786600.pdf: DEBUG: pagador: eduardo rodrigo barbosa ramos, destinatario: o recebedor setembro 2025 forma de pagamento ag 0193 cc 1041734-7 dados do recebedor para luiz augusto da silva, idTransacao: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: isProcessedConditionMet: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: 2025-09-22_180143.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["id transação e003603052025092221014240fc4df0f","e003603052025092221014240fc4df0f"]
+DEBUG: 2025-09-22_180143.pdf: DEBUG: pagador: nome luciana aparecida ramos saccomano martins, destinatario: nome luiz augusto da silva, idTransacao: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: isProcessedConditionMet: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /protocolo\s+([a-zA-Z0-9\-]+)/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: pagador: luiz fernando s colussi *, destinatario: gabriella g silva, idTransacao: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: isProcessedConditionMet: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: Status definido como: PDF Escaneado - Processamento Manual Necessário
+DEBUG: Imagem do WhatsApp de 2025-09-21 à(s) 00.32.43_d0c6da83.jpg: DEBUG: Nubank idTransacaoMatch: ["1d da transação: e18236120202509210332s1030198b89","e18236120202509210332s1030198b89"]
+DEBUG: Sicoob comprovante (16-09-2025_18-59-25).pdf: DEBUG: savePixTransaction called.
+DEBUG: Sicoob comprovante (16-09-2025_18-59-25).pdf: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions_no_process (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: Sicoob comprovante (16-09-2025_18-59-25).pdf: DEBUG: SQL Values: ["Sicoob comprovante (16-09-2025_18-59-25).pdf",null,null,null,"2025-09-16","16:09:20","Sicoob",null,"PDF Escaneado - Processamento Manual Necessário",null,"PDF com pouco texto extraído. Pode ser necessário processamento manual ou OCR adicional.","\n\n",null]
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: General idTransacao match for pattern /protocolo\s+([a-zA-Z0-9\-]+)/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: pagador: null, destinatario: luiz augusto da silva, idTransacao: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: isProcessedConditionMet: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: Status definido como: PDF Escaneado - Processamento Manual Necessário
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: savePixTransaction called.
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions_no_process (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: SQL Values: ["Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg",40,"luiz augusto da silva","85617012025","2025-09-22","21:31:30","Banco Inter","CPF","PDF Escaneado - Processamento Manual Necessário",null,null,"é\nComprovante de envio de Pix\n22/09/2025 às 21:31:30\n\nValor da transferência\nR$ 40,00\nTipo de transferência\nPix\nCódigo da transação Pagbank\n520a4be7-b99f-48d0-affc-013bb5afbe23\nCódigo da transação Pix\nEO8561701202509230031UFB3IDCYORW\nDe\nRicardo Alexandre Ribeiro\nCPF\n**+* 751.708-**\nInstituição\nPagBank (PagSeguro Internet Instituição\nde Pagamento S.A.)\nPara\nLUIZ AUGUSTO DA SILVA\nCPF\n*** 881.268-**\nInstituição\nITAÚ UNIBANCO S.A.\nChave\nluizaugustodasilva352(Ogmail.com\nPara dúvidas, ligue 4003-1775 (capitais e\nregiões metropolitanas) ou 0800-;)28-2174\n(demais localidades, exceto celular). Para falar\ncom a Ouvidoria ligue 0800-728-2167.\n",null]
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["transação e9040088820250920235846576654733","e9040088820250920235846576654733"]
+DEBUG: 1758412786600.pdf: DEBUG: pagador: eduardo rodrigo barbosa ramos, destinatario: o recebedor setembro 2025 forma de pagamento ag 0193 cc 1041734-7 dados do recebedor para luiz augusto da silva, idTransacao: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: isProcessedConditionMet: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: 2025-09-22_180143.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["id transação e003603052025092221014240fc4df0f","e003603052025092221014240fc4df0f"]
+DEBUG: 2025-09-22_180143.pdf: DEBUG: pagador: nome luciana aparecida ramos saccomano martins, destinatario: nome luiz augusto da silva, idTransacao: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: isProcessedConditionMet: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: Imagem do WhatsApp de 2025-09-21 à(s) 00.32.43_d0c6da83.jpg: DEBUG: Nubank idTransacaoMatch: ["1d da transação: e18236120202509210332s1030198b89","e18236120202509210332s1030198b89"]
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /protocolo\s+([a-zA-Z0-9\-]+)/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: pagador: luiz fernando s colussi *, destinatario: gabriella g silva, idTransacao: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: isProcessedConditionMet: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: Status definido como: PDF Escaneado - Processamento Manual Necessário
+DEBUG: Sicoob comprovante (16-09-2025_18-59-25).pdf: DEBUG: savePixTransaction called.
+DEBUG: Sicoob comprovante (16-09-2025_18-59-25).pdf: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions_no_process (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: Sicoob comprovante (16-09-2025_18-59-25).pdf: DEBUG: SQL Values: ["Sicoob comprovante (16-09-2025_18-59-25).pdf",null,null,null,"2025-09-16","16:09:20","Sicoob",null,"PDF Escaneado - Processamento Manual Necessário",null,"PDF com pouco texto extraído. Pode ser necessário processamento manual ou OCR adicional.","\n\n",null]
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: General idTransacao match for pattern /protocolo\s+([a-zA-Z0-9\-]+)/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: pagador: null, destinatario: luiz augusto da silva, idTransacao: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: isProcessedConditionMet: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: Status definido como: PDF Escaneado - Processamento Manual Necessário
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: savePixTransaction called.
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions_no_process (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: SQL Values: ["Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg",40,"luiz augusto da silva","85617012025","2025-09-22","21:31:30","Banco Inter","CPF","PDF Escaneado - Processamento Manual Necessário",null,null,"é\nComprovante de envio de Pix\n22/09/2025 às 21:31:30\n\nValor da transferência\nR$ 40,00\nTipo de transferência\nPix\nCódigo da transação Pagbank\n520a4be7-b99f-48d0-affc-013bb5afbe23\nCódigo da transação Pix\nEO8561701202509230031UFB3IDCYORW\nDe\nRicardo Alexandre Ribeiro\nCPF\n**+* 751.708-**\nInstituição\nPagBank (PagSeguro Internet Instituição\nde Pagamento S.A.)\nPara\nLUIZ AUGUSTO DA SILVA\nCPF\n*** 881.268-**\nInstituição\nITAÚ UNIBANCO S.A.\nChave\nluizaugustodasilva352(Ogmail.com\nPara dúvidas, ligue 4003-1775 (capitais e\nregiões metropolitanas) ou 0800-;)28-2174\n(demais localidades, exceto celular). Para falar\ncom a Ouvidoria ligue 0800-728-2167.\n",null]
+DEBUG: Sicoob comprovante (16-09-2025_18-59-25).pdf: DEBUG: savePixTransaction called.
+DEBUG: Sicoob comprovante (16-09-2025_18-59-25).pdf: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions_no_process (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: Sicoob comprovante (16-09-2025_18-59-25).pdf: DEBUG: SQL Values: ["Sicoob comprovante (16-09-2025_18-59-25).pdf",null,null,null,"2025-09-16","16:09:20","Sicoob",null,"PDF Escaneado - Processamento Manual Necessário",null,"PDF com pouco texto extraído. Pode ser necessário processamento manual ou OCR adicional.","\n\n",null]
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["transação e9040088820250920235846576654733","e9040088820250920235846576654733"]
+DEBUG: 1758412786600.pdf: DEBUG: pagador: eduardo rodrigo barbosa ramos, destinatario: o recebedor setembro 2025 forma de pagamento ag 0193 cc 1041734-7 dados do recebedor para luiz augusto da silva, idTransacao: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: isProcessedConditionMet: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: 1758412786600.pdf: DEBUG: savePixTransaction called.
+DEBUG: 1758412786600.pdf: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: 1758412786600.pdf: DEBUG: SQL Values: ["1758412786600.pdf",20,"luiz augusto da silva","90400888202","2025-09-20","20:59:40","bco santander (brasil) s.a.","CPF","Processado","e9040088820250920235846576654733","setembro 2025","\n\n\nComprovante do Pix\n20/09/2025 - 20:59:40\nValor pago\nR$ 20,00\nInformação para o recebedor\nSetembro 2025\nForma de pagamento\nAg 0193 Cc 1041734-7\nDados do recebedor\nPara\nLuiz Augusto da Silva\nCPF\n***.881.268-**\nChave\nlu*****************52@gmail.com\nInstituição\nITAU UNIBANCO S.A.\nDados do pagador\nDe\nEduardo Rodrigo Barbosa Ramos\nCPF\n***.229.258-**\nInstituição\nBCO SANTANDER (BRASIL) S.A.\nComprovante do Pix1/2\n\n\nID/Transação\nE9040088820250920235846576654733\nData e hora da transação\n20/09/2025 - 20:59:40\nCódigo de autenticação\nA8A381D401745D888799614\n4004-3535 (Capitais e Regiões Metropolitanas)\n0800-702-3535 (Demais Localidades)\nSAC 0800-762-7777\nOuvidoria 0800-726-0332\nCentral de Atendimento Santander\nComprovante do Pix2/2","eduardo rodrigo barbosa ramos"]
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /protocolo\s+([a-zA-Z0-9\-]+)/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: pagador: luiz fernando s colussi *, destinatario: gabriella g silva, idTransacao: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: isProcessedConditionMet: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: Status definido como: PDF Escaneado - Processamento Manual Necessário
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: savePixTransaction called.
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: SQL Values: ["Comprovante_23-09-2025_065915.pdf",50,"gabriella g silva","58184756895","2025-09-23","06:59:02","Banco do Brasil","CPF","PDF Escaneado - Processamento Manual Necessário",null,null,"\n\n\nComprovante BB\n\nPix Enviado\nR$ 50,00\n23/09/2025 às 06:59:02\nRecebedor\nGabriella G Silva\nCPF\n***.847.568-**\nAgência\n0001\nConta\n1729750572\nInstituição\n18236120 NU PAGAMENTOS - IP\nTipo de conta\nConta Pagamento\nChave Pix\n58184756895\nPagador\nLuiz Fernando S Colussi *\nCPF\n***.210.728.**\nAgência\n3652-8\nConta\n6484769-1\nInstituição\n00000000 BCO DO BRASIL S.A.\nInformações adicionais\nID: E0000000020250923095849085388250\nDocumento: 000000000092301\nAutenticação SISBB: 0.0B9.C02.CF4.843.F42\nNotificação enviada em: 23/09/2025 às 06:59:03\nCentral de Relacionamento:\u00014004 0001 Capitais e regiões metropolitanas.\u00010800 729 0001 Demais localidades.\u0001SAC: 0800 729 0722.\u0001Ouvidoria: 0800 729 5678.\u0001Atendimento a deficientes auditivo\nEsse é o novo comprovante do Banco do Brasil.\u0001Mais clareza nas informações, facilitando sua vida.","luiz fernando s colussi *"]
+DEBUG: 2025-09-22_180143.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["id transação e003603052025092221014240fc4df0f","e003603052025092221014240fc4df0f"]
+DEBUG: 2025-09-22_180143.pdf: DEBUG: pagador: nome luciana aparecida ramos saccomano martins, destinatario: nome luiz augusto da silva, idTransacao: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: isProcessedConditionMet: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: 2025-09-22_180143.pdf: DEBUG: savePixTransaction called.
+DEBUG: 2025-09-22_180143.pdf: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: 2025-09-22_180143.pdf: DEBUG: SQL Values: ["2025-09-22_180143.pdf",20,"luiz augusto da silva","luizaugustodasilva352@gmail.com","2025-09-22","18:01:36","Caixa Econômica Federal","Email","Processado","e003603052025092221014240fc4df0f",null,"\n\nComprovante de Pix enviado\nPix realizado com sucesso!\nDados do recebedor\nNome\nLUIZ AUGUSTO DA SILVA\nCPF\n***.881.268-**\nInstituição\nITAÚ UNIBANCO S.A.\nDados do pagador\nNome\nLUCIANA APARECIDA RAMOS SACCOMANO MARTINS\nCPF\n***.373.018-**\nInstituição\nCAIXA ECONÔMICA FEDERAL\nDados da transação\nSituação\nEfetivado\nValor\n20,00\nValorData\nR$ 20,00\n22/09/2025\n18:01:36\n\nData/ Hora\n22/09/2025 - 18:01:36\nID transação\nE003603052025092221014240fc4df0f\nCódigo da operação\n53004457328\nChave de segurança\n9GZL5704Y6573KZM\nChave Pix\nluizaugustodasilva352@gmail.com\n\nVocê poderá consultar futuramente essa e outras transações no item “Minhas Transações”, opção\n“Consultas - Comprovantes”.\n  Novo Pix\n\n  Favoritar\n\n  Compartilhar\nVoltar\nCaso tenha dúvidas ou não reconheça esta transação, entre em contato com o Alô CAIXA e informe o ID da Transação\npresente neste comprovante.\nAlô CAIXA: 4004 0104 (Capitais e Regiões Metropolitanas)\nAlô CAIXA: 0800 104 0 104 (Demais regiões)\nPessoas com deficiência auditiva: 0800 726 2492\nSAC CAIXA: 0800 726 0101\nOuvidoria: 0800 725 7474","luciana aparecida ramos saccomano martins"]
+DEBUG: Imagem do WhatsApp de 2025-09-21 à(s) 00.32.43_d0c6da83.jpg: DEBUG: Nubank idTransacaoMatch: ["1d da transação: e18236120202509210332s1030198b89","e18236120202509210332s1030198b89"]
+DEBUG: Imagem do WhatsApp de 2025-09-21 à(s) 00.32.43_d0c6da83.jpg: DEBUG: savePixTransaction called.
+DEBUG: Imagem do WhatsApp de 2025-09-21 à(s) 00.32.43_d0c6da83.jpg: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: Imagem do WhatsApp de 2025-09-21 à(s) 00.32.43_d0c6da83.jpg: DEBUG: SQL Values: ["Imagem do WhatsApp de 2025-09-21 à(s) 00.32.43_d0c6da83.jpg",20,"luiz augusto da silva",null,"2025-09-21","00:32:13","itau unibanco s.a.",null,"PDF Escaneado - Processamento Manual Necessário","e18236120202509210332s1030198b89","PDF com pouco texto extraído. Pode ser necessário processamento manual ou OCR adicional.","nU,\n\no\nComprovante de\ntransferência\n21 SET 2025 - 00:32:13\nValor R$ 20,00\nTipo de transferência Pix\nDestino\nNome Luiz Augusto da Silva\nCPF . BB1.268-\nInstituição ITAU UNIBANCO S.A.\nAgência 0531\nConta 36085-7\nTipo de conta Conta de pagamentos\nOrigem\nNome Joao Vitor de Araujo\nInstituição NU PAGAMENTOS - IP\nAgência 0001\nConta 29393555-6\nCPF n B41.608-»\nNu Pagamentos S.A. - Instituição de\nPagamento\nCNP) 18.236.120/0001-58\n1D da transação:\nE18236120202509210332s1030198b89\nEstamos aqui para ajudar se você tiver alguma dúvida.\nMeajuda >\nOuvidoria: 0800 887 0463 |\nouvidoriaeênubank.com.br (Atendimento das 8h às 18h\nem dias úteis).\n","joao vitor de araujo"]
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: General idTransacao match for pattern /protocolo\s+([a-zA-Z0-9\-]+)/i: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: pagador: null, destinatario: luiz augusto da silva, idTransacao: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: isProcessedConditionMet: null
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: Status definido como: PDF Escaneado - Processamento Manual Necessário
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: savePixTransaction called.
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: SQL Query: 
+      INSERT INTO pix_transactions_no_process (
+        filename, valor, destinatario, chave_pix, data_transferencia, 
+        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        observacoes, extracted_text, pagador
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    
+DEBUG: Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg: DEBUG: SQL Values: ["Imagem do WhatsApp de 2025-09-22 à(s) 21.33.18_cf1d3826.jpg",40,"luiz augusto da silva","85617012025","2025-09-22","21:31:30","Banco Inter","CPF","PDF Escaneado - Processamento Manual Necessário",null,null,"é\nComprovante de envio de Pix\n22/09/2025 às 21:31:30\n\nValor da transferência\nR$ 40,00\nTipo de transferência\nPix\nCódigo da transação Pagbank\n520a4be7-b99f-48d0-affc-013bb5afbe23\nCódigo da transação Pix\nEO8561701202509230031UFB3IDCYORW\nDe\nRicardo Alexandre Ribeiro\nCPF\n**+* 751.708-**\nInstituição\nPagBank (PagSeguro Internet Instituição\nde Pagamento S.A.)\nPara\nLUIZ AUGUSTO DA SILVA\nCPF\n*** 881.268-**\nInstituição\nITAÚ UNIBANCO S.A.\nChave\nluizaugustodasilva352(Ogmail.com\nPara dúvidas, ligue 4003-1775 (capitais e\nregiões metropolitanas) ou 0800-;)28-2174\n(demais localidades, exceto celular). Para falar\ncom a Ouvidoria ligue 0800-728-2167.\n",null]
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["transação e9040088820250920235846576654733","e9040088820250920235846576654733"]
+DEBUG: 1758412786600.pdf: DEBUG: pagador: eduardo rodrigo barbosa ramos, destinatario: o recebedor setembro 2025 forma de pagamento ag 0193 cc 1041734-7 dados do recebedor para luiz augusto da silva, idTransacao: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: isProcessedConditionMet: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: Imagem do WhatsApp de 2025-09-21 à(s) 00.32.43_d0c6da83.jpg: DEBUG: Nubank idTransacaoMatch: ["1d da transação: e18236120202509210332s1030198b89","e18236120202509210332s1030198b89"]
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /protocolo\s+([a-zA-Z0-9\-]+)/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: pagador: luiz fernando s colussi *, destinatario: gabriella g silva, idTransacao: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: isProcessedConditionMet: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: Status definido como: PDF Escaneado - Processamento Manual Necessário
+DEBUG: 2025-09-22_180143.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["id transação e003603052025092221014240fc4df0f","e003603052025092221014240fc4df0f"]
+DEBUG: 2025-09-22_180143.pdf: DEBUG: pagador: nome luciana aparecida ramos saccomano martins, destinatario: nome luiz augusto da silva, idTransacao: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: isProcessedConditionMet: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["transação e9040088820250920235846576654733","e9040088820250920235846576654733"]
+DEBUG: 1758412786600.pdf: DEBUG: pagador: eduardo rodrigo barbosa ramos, destinatario: o recebedor setembro 2025 forma de pagamento ag 0193 cc 1041734-7 dados do recebedor para luiz augusto da silva, idTransacao: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: isProcessedConditionMet: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: 2025-09-22_180143.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["id transação e003603052025092221014240fc4df0f","e003603052025092221014240fc4df0f"]
+DEBUG: 2025-09-22_180143.pdf: DEBUG: pagador: nome luciana aparecida ramos saccomano martins, destinatario: nome luiz augusto da silva, idTransacao: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: isProcessedConditionMet: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /protocolo\s+([a-zA-Z0-9\-]+)/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: pagador: luiz fernando s colussi *, destinatario: gabriella g silva, idTransacao: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: isProcessedConditionMet: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: Status definido como: PDF Escaneado - Processamento Manual Necessário
+DEBUG: Imagem do WhatsApp de 2025-09-21 à(s) 00.32.43_d0c6da83.jpg: DEBUG: Nubank idTransacaoMatch: ["1d da transação: e18236120202509210332s1030198b89","e18236120202509210332s1030198b89"]
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /protocolo\s+([a-zA-Z0-9\-]+)/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: pagador: luiz fernando s colussi *, destinatario: gabriella g silva, idTransacao: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: isProcessedConditionMet: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: Status definido como: PDF Escaneado - Processamento Manual Necessário
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["transação e9040088820250920235846576654733","e9040088820250920235846576654733"]
+DEBUG: 1758412786600.pdf: DEBUG: pagador: eduardo rodrigo barbosa ramos, destinatario: o recebedor setembro 2025 forma de pagamento ag 0193 cc 1041734-7 dados do recebedor para luiz augusto da silva, idTransacao: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: isProcessedConditionMet: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: Imagem do WhatsApp de 2025-09-21 à(s) 00.32.43_d0c6da83.jpg: DEBUG: Nubank idTransacaoMatch: ["1d da transação: e18236120202509210332s1030198b89","e18236120202509210332s1030198b89"]
+DEBUG: 2025-09-22_180143.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["id transação e003603052025092221014240fc4df0f","e003603052025092221014240fc4df0f"]
+DEBUG: 2025-09-22_180143.pdf: DEBUG: pagador: nome luciana aparecida ramos saccomano martins, destinatario: nome luiz augusto da silva, idTransacao: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: isProcessedConditionMet: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["transação e9040088820250920235846576654733","e9040088820250920235846576654733"]
+DEBUG: 1758412786600.pdf: DEBUG: pagador: eduardo rodrigo barbosa ramos, destinatario: o recebedor setembro 2025 forma de pagamento ag 0193 cc 1041734-7 dados do recebedor para luiz augusto da silva, idTransacao: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: isProcessedConditionMet: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: Imagem do WhatsApp de 2025-09-21 à(s) 00.32.43_d0c6da83.jpg: DEBUG: Nubank idTransacaoMatch: ["1d da transação: e18236120202509210332s1030198b89","e18236120202509210332s1030198b89"]
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /protocolo\s+([a-zA-Z0-9\-]+)/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: pagador: luiz fernando s colussi *, destinatario: gabriella g silva, idTransacao: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: isProcessedConditionMet: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: Status definido como: PDF Escaneado - Processamento Manual Necessário
+DEBUG: 2025-09-22_180143.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["id transação e003603052025092221014240fc4df0f","e003603052025092221014240fc4df0f"]
+DEBUG: 2025-09-22_180143.pdf: DEBUG: pagador: nome luciana aparecida ramos saccomano martins, destinatario: nome luiz augusto da silva, idTransacao: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: isProcessedConditionMet: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1758412786600.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["transação e9040088820250920235846576654733","e9040088820250920235846576654733"]
+DEBUG: 1758412786600.pdf: DEBUG: pagador: eduardo rodrigo barbosa ramos, destinatario: o recebedor setembro 2025 forma de pagamento ag 0193 cc 1041734-7 dados do recebedor para luiz augusto da silva, idTransacao: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: isProcessedConditionMet: e9040088820250920235846576654733
+DEBUG: 1758412786600.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: Imagem do WhatsApp de 2025-09-21 à(s) 00.32.43_d0c6da83.jpg: DEBUG: Nubank idTransacaoMatch: ["1d da transação: e18236120202509210332s1030198b89","e18236120202509210332s1030198b89"]
+DEBUG: 2025-09-22_180143.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["id transação e003603052025092221014240fc4df0f","e003603052025092221014240fc4df0f"]
+DEBUG: 2025-09-22_180143.pdf: DEBUG: pagador: nome luciana aparecida ramos saccomano martins, destinatario: nome luiz augusto da silva, idTransacao: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: isProcessedConditionMet: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: General idTransacao match for pattern /protocolo\s+([a-zA-Z0-9\-]+)/i: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: pagador: luiz fernando s colussi *, destinatario: gabriella g silva, idTransacao: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: isProcessedConditionMet: null
+DEBUG: Comprovante_23-09-2025_065915.pdf: DEBUG: Status definido como: PDF Escaneado - Processamento Manual Necessário
