@@ -97,6 +97,21 @@ writeDebugToFile(filename, `DEBUG: Nubank idTransacaoMatch: ${JSON.stringify(idT
       }
     }
 
+    // Lógica específica para PagBank (PagSeguro Internet Instituição de Pagamento S.A.)
+    if (normalizedText.includes('pagbank (pagseguro internet instituição de pagamento s.a.)')) {
+      console.log('Detectado comprovante do PagBank. Iniciando extração específica...');
+      pixData.instituicao = 'PagBank (PagSeguro Internet Instituição de Pagamento S.A.)';
+      pixData.banco = 'PagBank (PagSeguro Internet Instituição de Pagamento S.A.)';
+
+      // Extrair Pagador (De)
+      const pagadorPagbankPattern = /de\s+([a-zA-Z\s]+?)\s+(?:cpf|institui[çc][ãa]o|para)/i;
+      const pagadorPagbankMatch = normalizedText.match(pagadorPagbankPattern);
+      if (pagadorPagbankMatch && pagadorPagbankMatch[1]) {
+        pixData.pagador = pagadorPagbankMatch[1].trim();
+        console.log(`👤 Pagador (PagBank) encontrado: ${pixData.pagador}`);
+      }
+    }
+
     // Extrair valor - priorizar símbolo R$
     let valorEncontrado = false;
     
@@ -243,17 +258,19 @@ writeDebugToFile(filename, `DEBUG: Nubank idTransacaoMatch: ${JSON.stringify(idT
     }
 
     // Extrair pagador (busca por padrões comuns)
-    const pagadorPatterns = [
-      /dados do pagador\s*de\s*([^,\n]+?)(?:\n|cpf|chave|instituição|banco|$)/gi,
-      /pagador[:\s]+([^,\n]+?)(?:\n|cpf|chave|instituição|banco|$)/gi
-    ];
+    if (!pixData.pagador) {
+      const pagadorPatterns = [
+        /dados do pagador\s*de\s*([^,\n]+?)(?:\n|cpf|chave|instituição|banco|$)/gi,
+        /pagador[:\s]+([^,\n]+?)(?:\n|cpf|chave|instituição|banco|$)/gi
+      ];
 
-    for (const pattern of pagadorPatterns) {
-      const match = pattern.exec(normalizedText);
-      if (match) {
-        pixData.pagador = match[1].trim();
-        console.log(`👤 Pagador encontrado (geral): ${pixData.pagador}`);
-        break;
+      for (const pattern of pagadorPatterns) {
+        const match = pattern.exec(normalizedText);
+        if (match) {
+          pixData.pagador = match[1].trim();
+          console.log(`👤 Pagador encontrado (geral): ${pixData.pagador}`);
+          break;
+        }
       }
     }
 
@@ -497,41 +514,8 @@ writeDebugToFile(filename, `DEBUG: Nubank idTransacaoMatch: ${JSON.stringify(idT
       }
     }
 
-    // Lógica específica para NU PAGAMENTOS - IP
-    console.log(`DEBUG: Antes de writeDebugToFile - filename: ${filename}, normalizedText length: ${normalizedText.length}`);
-    writeDebugToFile(filename, `RAW Normalized Text for Nubank check: ${normalizedText}`, 'nubank_normalized_text_raw.txt');
-    if (normalizedText.includes('instituição nu pagamentos - ip')) {
-      console.log('DEBUG: Bloco Nubank IF executado!');
-      console.log('DEBUG: Parâmetros para writeDebugToFile (Nubank):', { filename, normalizedText, logFileName: 'nubank_debug_normalized_text.txt' }); // Novo log para depuração
-      writeDebugToFile(filename, `DEBUG: Nubank Normalized Text: ${normalizedText}`, 'nubank_debug_normalized_text.txt');
-      console.log('Detectado comprovante do NU PAGAMENTOS - IP. Iniciando extração específica...');
-      console.log('Normalized Text for NU PAGAMENTOS - IP:', normalizedText);
-      console.log('DEBUG: Normalized Text for Nubank:', normalizedText); // Adicionado para depuração
-  
-      // Extrair Origem Nome para pagador
-      const origemNomePattern = /origem nome\s*(.*?)(?:\s*institui[çc][ãa]o|\s*agencia|\s*conta|\s*cpf|$)/i;
-      const origemNomeMatch = normalizedText.match(origemNomePattern);
-      if (origemNomeMatch && origemNomeMatch[1]) {
-        pixData.pagador = origemNomeMatch[1].trim();
-        console.log(`👤 Pagador (NU PAGAMENTOS - IP) encontrado: ${pixData.pagador}`);
-      }
-  
-      // Extrair Destino Nome para destinatario
-      const destinoNomePattern = /destino nome\s*(.*?)(?:\s*cpf|\s*cnpj|\s*chave|\s*institui[çc][ãa]o|\s*agencia|\s*conta|$)/i;
-      const destinoNomeMatch = normalizedText.match(destinoNomePattern);
-      if (destinoNomeMatch && destinoNomeMatch[1]) {
-        pixData.destinatario = destinoNomeMatch[1].trim();
-        console.log(`👤 Destinatário (NU PAGAMENTOS - IP) encontrado: ${pixData.destinatario}`);
-      }
-  
-      // Extrair Origem Instituição para banco
-      const origemInstituicaoPattern = /origem\s*institui[çc][ãa]o\s*(.*?)(?:\s*agencia|\s*conta|\s*cpf|$)/i;
-      const origemInstituicaoMatch = normalizedText.match(origemInstituicaoPattern);
-      if (origemInstituicaoMatch && origemInstituicaoMatch[1]) {
-        pixData.banco = origemInstituicaoMatch[1].trim();
-        console.log(`🏦 Banco (NU PAGAMENTOS - IP) encontrado: ${pixData.banco}`);
-      }
-    }
+
+
 
   return pixData;
 

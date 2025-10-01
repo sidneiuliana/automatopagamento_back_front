@@ -340,7 +340,7 @@ async function updatePixTransaction(id, pixData) {
     };
 
     const values = [
-      valor ? parseFloat(valor.replace(',', '.')) : null,
+      valor ? parseFloat(String(valor).replace(',', '.')) : null,
       destinatario, 
       truncateString(chavePix, 500),
       convertDateToMySQL(data), 
