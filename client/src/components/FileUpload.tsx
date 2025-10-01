@@ -176,7 +176,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload, loading, onProces
           )}
         </Button>
         
-        <Button 
+        {/* <Button 
           variant="secondary" 
           onClick={onProcessFolder}
           disabled={loading}
@@ -189,7 +189,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload, loading, onProces
           ) : (
             'Processar Pasta Arquivos'
           )}
-        </Button>
+        </Button> */}
       </ButtonContainer>
     </UploadContainer>
   );
