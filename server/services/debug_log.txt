@@ -1033,3 +1033,23 @@ DEBUG: comprovante.pdf: DEBUG: SQL Query:
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     
 DEBUG: comprovante.pdf: DEBUG: SQL Values: ["comprovante.pdf",40,"luizaugustodasilva","61186680202","2025-08-01",null,null,"CPF","PDF Escaneado - Processamento Manual Necessário",null,null,"\n\nComprovantedeenvioPix\nValorR$40,00\n01/08/2025às14:27\nDe\nSIDNEIULIANA\nCPF/CNPJ***.567.038-**\nInstituiçãoBancoBmgS/A\nPara\nLuizAugustoDaSilva\nCPF/CNPJ***.881.268-**\nInstituiçãoITAÚUNIBANCOS.A.\nDescriçãoMensalidadeAgosto2025\nCanalAplicativoBmg\nIDdaTransaçãoE61186680202508011726QcaPwxZGbmd\nCentraldeRelacionamento\n24horastodososdiasdasemana\n08007701790Telefonefixo\n40027007Ligaçõesdecelular\nSAC\n24horastodososdiasdasemana\n0800979909\nAtendimentoacessível\n24horastodososdiasdasemana\n08009797333\nOuvidoria\n2ªa6ª,das9hàs18h\n08007232044",null]
+DEBUG: 2025-09-22_180143.pdf_2025-10-01T17-43-07-333Z: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["id transação e003603052025092221014240fc4df0f","e003603052025092221014240fc4df0f"]
+DEBUG: 2025-09-22_180143.pdf_2025-10-01T17-43-07-333Z: DEBUG: pagador: nome luciana aparecida ramos saccomano martins, destinatario: nome luiz augusto da silva, idTransacao: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf_2025-10-01T17-43-07-333Z: DEBUG: isProcessedConditionMet: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf_2025-10-01T17-43-07-333Z: DEBUG: Status atualizado para: Processado
+DEBUG: 2025-09-22_180143.pdf_2025-10-01T17-43-39-574Z: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["id transação e003603052025092221014240fc4df0f","e003603052025092221014240fc4df0f"]
+DEBUG: 2025-09-22_180143.pdf_2025-10-01T17-43-39-574Z: DEBUG: pagador: nome luciana aparecida ramos saccomano martins, destinatario: nome luiz augusto da silva, idTransacao: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf_2025-10-01T17-43-39-574Z: DEBUG: isProcessedConditionMet: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf_2025-10-01T17-43-39-574Z: DEBUG: Status atualizado para: Processado
+DEBUG: 2025-09-22_180143.pdf_2025-10-01T17-44-25-032Z: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["id transação e003603052025092221014240fc4df0f","e003603052025092221014240fc4df0f"]
+DEBUG: 2025-09-22_180143.pdf_2025-10-01T17-44-25-032Z: DEBUG: pagador: nome luciana aparecida ramos saccomano martins, destinatario: nome luiz augusto da silva, idTransacao: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf_2025-10-01T17-44-25-032Z: DEBUG: isProcessedConditionMet: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf_2025-10-01T17-44-25-032Z: DEBUG: Status atualizado para: Processado
+DEBUG: 2025-09-22_180143.pdf_2025-10-01T17-44-29-783Z: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["id transação e003603052025092221014240fc4df0f","e003603052025092221014240fc4df0f"]
+DEBUG: 2025-09-22_180143.pdf_2025-10-01T17-44-29-783Z: DEBUG: pagador: nome luciana aparecida ramos saccomano martins, destinatario: nome luiz augusto da silva, idTransacao: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf_2025-10-01T17-44-29-783Z: DEBUG: isProcessedConditionMet: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf_2025-10-01T17-44-29-783Z: DEBUG: Status atualizado para: Processado
+DEBUG: 2025-09-22_180143.pdf: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["id transação e003603052025092221014240fc4df0f","e003603052025092221014240fc4df0f"]
+DEBUG: 2025-09-22_180143.pdf: DEBUG: pagador: nome luciana aparecida ramos saccomano martins, destinatario: nome luiz augusto da silva, idTransacao: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: isProcessedConditionMet: e003603052025092221014240fc4df0f
+DEBUG: 2025-09-22_180143.pdf: DEBUG: Status atualizado para: Processado

@@ -108,6 +108,8 @@ function App() {
   const [availableMonthsYears, setAvailableMonthsYears] = useState<string[]>([]);
   const [selectedMonthYear, setSelectedMonthYear] = useState<string>('');
 
+  const [uploadKey, setUploadKey] = useState<number>(0);
+
   const extractMonthsYears = useCallback((data: PixData[]): string[] => {
     console.log("Dados recebidos para extractMonthsYears:", data);
     const monthsYears = new Set<string>();
@@ -172,12 +174,30 @@ function App() {
     setMessage(null);
 
     try {
+      const existingFilenames = new Set([
+        ...pixData.map(item => item.filename),
+        ...unprocessedPixData.map(item => item.filename)
+      ]);
+
+      const filesToUpload = files.filter(file => {
+        if (existingFilenames.has(file.name)) {
+          setMessage({ text: `O arquivo '${file.name}' já foi processado anteriormente.`, type: 'info' });
+          return false;
+        }
+        return true;
+      });
+
+      if (filesToUpload.length === 0) {
+        setLoading(false);
+        return;
+      }
+
       const formData = new FormData();
-      files.forEach(file => {
+      filesToUpload.forEach(file => {
         formData.append('files', file);
       });
 
-      const response = await api.post('/upload', formData, {
+      const response = await api.post('/api/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -209,12 +229,13 @@ function App() {
         text: error.response?.data?.error || 'Erro ao processar arquivos',
         type: 'error'
       });
-    } finally {
-      setLoading(false);
-    }
-  };
+      } finally {
+        setLoading(false);
+        setUploadKey(prev => prev + 1); // Incrementa a chave para forçar a remontagem do FileUpload
+      }
+    };
 
-  const handleProcessFolder = async () => {
+    const handleProcessFolder = async () => {
     setLoading(true);
     setMessage(null);
 
@@ -286,6 +307,7 @@ function App() {
           )}
 
           <FileUpload 
+            key={uploadKey} // Adiciona a key para forçar a remontagem e limpar o campo
             onFileUpload={handleFileUpload}
             loading={loading}
             onProcessFolder={handleProcessFolder}
