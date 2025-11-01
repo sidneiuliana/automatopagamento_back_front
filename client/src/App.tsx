@@ -203,30 +203,44 @@ function App() {
         },
       });
 
-      if (response.data.success) {
-        const newData = response.data.results.map((result: any) => ({
+      if (response.status === 200 && response.data.successfulUploads.length > 0) {
+        const newData = response.data.successfulUploads.map((result: any) => ({
           ...result.pixData,
           filename: result.filename,
           extractedText: result.extractedText,
-          processedAt: result.processedAt
+          processedAt: new Date().toISOString() // Adiciona um timestamp
         }));
 
         setPixData(prev => {
           const updatedData = [...prev, ...newData];
-          console.log('Dados atualizados após upload para extração de meses/anos:', updatedData);
           const extracted = extractMonthsYears(updatedData);
           setAvailableMonthsYears(extracted);
           return updatedData;
         });
+
+        let messageText = response.data.message;
+        if (response.data.failedUploads.length > 0) {
+          const failedFiles = response.data.failedUploads.map((f: any) => f.filename).join(', ');
+          messageText += ` Falha ao processar: ${failedFiles}`;
+        }
+
         setMessage({
-          text: `${files.length} arquivo(s) processado(s) com sucesso!`,
+          text: messageText,
           type: 'success'
+        });
+
+      } else {
+        const errorMessage = response.data.message || (response.data.details && response.data.details.map((d: any) => `${d.filename}: ${d.message}`).join(', ')) || 'Nenhum arquivo foi processado com sucesso.';
+        setMessage({
+          text: errorMessage,
+          type: 'error'
         });
       }
     } catch (error: any) {
       console.error('Erro no upload:', error);
+      const errorMessage = error.response?.data?.message || error.response?.data?.error || 'Erro ao processar arquivos';
       setMessage({
-        text: error.response?.data?.error || 'Erro ao processar arquivos',
+        text: errorMessage,
         type: 'error'
       });
       } finally {

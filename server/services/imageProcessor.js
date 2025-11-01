@@ -14,6 +14,11 @@ async function processImage(imagePath) {
       imagePath,
       'por', // Português
       {
+        // Parâmetros de configuração do Tesseract para melhorar a precisão
+        tessedit_char_whitelist: '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZãÃáÁàÀâÂçÇéÉêÊíÍóÓôÔõÕúÚüÜ,.;:/-_()[]{}@#$%&* ',
+        preserve_interword_spaces: '1',
+        psm: 3, // Mudei para 3 para detecção automática de layout
+        oem: 1, // Usar o motor LSTM que é mais moderno
         logger: m => {
           if (m.status === 'recognizing text') {
             console.log(`OCR Progress: ${Math.round(m.progress * 100)}%`);

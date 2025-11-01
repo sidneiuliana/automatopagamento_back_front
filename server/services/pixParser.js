@@ -20,17 +20,14 @@ async function writeDebugToFile(fileName, content, logFileName = 'debug_log.txt'
  */
 function parsePixData(text, filename = '') {
   console.log(`DEBUG: parsePixData called for file: ${filename}`);
-  if (!text) {
+  
+  if (!text || text.trim() === '') {
+    writeDebugToFile(filename, 'OCR_TEXT_IS_EMPTY');
     return { error: 'Nenhum texto encontrado' };
   }
 
-  const normalizedText = text.toLowerCase();
-
-  // Adicionar log do normalizedText para depuração
-  // writeDebugToFile(filename, `DEBUG: Normalized Text (before Nubank check): ${normalizedText}`);
-
-  //console.log('Texto recebido para análise:', text);
-  //console.log('Nome do arquivo recebido para análise:', filename);
+  // Log do texto bruto para depuração
+  writeDebugToFile(filename, `RAW_OCR_OUTPUT: ${text}`);
 
   const pixData = {
     valor: null,
@@ -298,6 +295,7 @@ writeDebugToFile(filename, `DEBUG: Nubank idTransacaoMatch: ${JSON.stringify(idT
     // Extrair ID da transação
     console.log(`DEBUG: idTransacao before general extraction: ${pixData.idTransacao}`);
     const idPatterns = [
+      /(?:id|1d):\s*([a-zA-Z0-9]{30,})/i, // Specific for Banco do Brasil 'id: eso...' pattern
       /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i, // Specific for "id (da) transação" followed by a long ID
       /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i, // Specific for "id" followed by a long ID
       /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i, // Specific for "transação" followed by a long ID
@@ -378,9 +376,16 @@ writeDebugToFile(filename, `DEBUG: Nubank idTransacaoMatch: ${JSON.stringify(idT
     if (isProcessedConditionMet) {
       pixData.status = 'Processado';
       writeDebugToFile(filename, `DEBUG: Status atualizado para: ${pixData.status}`);
-    } else if (pixData.status !== 'Processado') {
-      pixData.status = 'PDF Escaneado - Processamento Manual Necessário';
-      writeDebugToFile(filename, `DEBUG: Status definido como: ${pixData.status}`);
+    } else {
+      // Verificar se é um PDF text-based com dados suficientes
+      const hasBasicData = pixData.valor && pixData.data && pixData.banco;
+      if (hasBasicData && text.length > 100) {
+        pixData.status = 'Processado';
+        writeDebugToFile(filename, `DEBUG: Status definido como Processado (dados básicos suficientes)`);
+      } else if (pixData.status !== 'Processado') {
+        pixData.status = 'PDF Escaneado - Processamento Manual Necessário';
+        writeDebugToFile(filename, `DEBUG: Status definido como: ${pixData.status}`);
+      }
     }
 
     // Extrair observações

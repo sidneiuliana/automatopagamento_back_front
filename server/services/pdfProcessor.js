@@ -20,8 +20,26 @@ async function processPDF(pdfPath) {
       console.log(`⚠️ PDF com pouco texto extraído (${data.text.length} chars) - tentando OCR`);
       console.log(`📄 Páginas: ${data.numpages}`);
       console.log(`📋 Info do PDF:`, data.info);
-      
-      console.log(`📋 PDF escaneado detectado. Usando informações do nome do arquivo e metadados.`);
+
+      // Tentar OCR para PDFs com pouco texto
+      const { processPDFAsImage } = require('./pdfToImageProcessor');
+      try {
+        const ocrText = await processPDFAsImage(pdfPath);
+        console.log(`✅ OCR bem-sucedido. Texto OCR: ${ocrText.length} caracteres`);
+
+        // Retornar resultado com texto OCR
+        const result = {
+          text: ocrText,
+          pages: data.numpages,
+          info: data.info,
+          ocr: true
+        };
+
+        return JSON.stringify(result, null, 2);
+      } catch (ocrError) {
+        console.error('❌ Falha no OCR:', ocrError.message);
+        console.log(`📋 PDF escaneado detectado. Usando informações do nome do arquivo e metadados.`);
+      }
     }
     
     // Retorna informações adicionais se disponíveis

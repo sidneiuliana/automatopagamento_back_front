@@ -8,6 +8,7 @@ const { writeDebugToFile } = require('./pixParser');
  */
 async function savePixTransaction(pixData) {
   writeDebugToFile(pixData.filename, 'DEBUG: savePixTransaction called.');
+  console.log(`DEBUG: savePixTransaction START for filename: ${pixData.filename}`);
   return new Promise((resolve, reject) => {
     const {
       filename,
@@ -94,9 +95,11 @@ async function savePixTransaction(pixData) {
       if (err) {
         writeDebugToFile(filename, `ERROR: Erro ao salvar no banco (${tableName}): ${err.message}`);
         console.error(`Erro ao salvar no banco (${tableName}):`, err);
+        console.log(`DEBUG: savePixTransaction ERROR for filename: ${filename}`);
         reject(err);
       } else {
         console.log(`✅ Transação salva na tabela ${tableName} com ID: ${result.insertId}`);
+        console.log(`DEBUG: savePixTransaction END for filename: ${filename}, insertId: ${result.insertId}`);
         resolve({ success: true, insertId: result.insertId, tableName: tableName });
       }
     });
@@ -253,13 +256,16 @@ async function deletePixTransactionByFilename(filename) {
  * @returns {Promise<Object|null>} - Os dados da transação PIX ou null se não encontrada.
  */
 async function getPixTransactionByFilename(filename) {
+  console.log(`DEBUG: getPixTransactionByFilename called for filename: ${filename}`);
   return new Promise((resolve, reject) => {
     const sql = 'SELECT * FROM pix_transactions WHERE filename = ?';
     connection.query(sql, [filename], (err, results) => {
       if (err) {
         console.error('Erro ao buscar transação por nome de arquivo:', err);
+        console.log(`DEBUG: getPixTransactionByFilename ERROR for filename: ${filename}`);
         reject(err);
       } else {
+        console.log(`DEBUG: getPixTransactionByFilename results for ${filename}: ${JSON.stringify(results)}`);
         resolve(results.length > 0 ? results[0] : null);
       }
     });

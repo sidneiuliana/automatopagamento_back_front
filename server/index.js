@@ -11,6 +11,123 @@ const { processPDF } = require('./services/pdfProcessor');
 const { parsePixData } = require('./services/pixParser');
 const { savePixTransaction, getAllPixTransactions, createPixTransactionsNoProcessTable, checkIfFileExistsInNoProcessTable } = require('./services/databaseService');
 
+const processingFiles = new Set();
+
+async function processFile(filePath, originalFilename) {
+  let baseFilename;
+  let extractedText = '';
+  let pixData = {};
+
+  if (originalFilename) {
+    baseFilename = originalFilename;
+  } else {
+    const filenameWithTimestamp = path.basename(filePath);
+    const timestampRegex = /_\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}-\d{3}Z/;
+    const match = filenameWithTimestamp.match(timestampRegex);
+
+    if (match) {
+      const nameWithoutTimestamp = filenameWithTimestamp.substring(0, match.index);
+      const extension = path.extname(filenameWithTimestamp);
+      baseFilename = `${nameWithoutTimestamp}${extension}`;
+    } else {
+      baseFilename = filenameWithTimestamp;
+    }
+  }
+
+  console.log(`DEBUG: processFile called with filePath: ${filePath}, originalFilename: ${originalFilename}`);
+  console.log(`DEBUG: Calculated baseFilename: ${baseFilename}`);
+  console.log(`Iniciando processamento do arquivo: ${baseFilename}`);
+
+  // Se o arquivo já está sendo processado, ignora
+  if (processingFiles.has(baseFilename)) {
+    console.log(`DEBUG: Arquivo ${baseFilename} já está em processamento. Ignorando.`);
+    return { filename: baseFilename, status: 'skipped', message: 'Arquivo já está em processamento.' };
+  }
+
+  processingFiles.add(baseFilename);
+
+  try {
+    // 1. Verificar se o arquivo já existe no banco de dados (tabela principal)
+    console.log(`DEBUG: Looking for existing transaction with baseFilename: ${baseFilename}`);
+    const existingTransaction = await databaseService.getPixTransactionByFilename(baseFilename);
+    console.log(`DEBUG: existingTransaction for ${baseFilename}: ${existingTransaction ? 'Found' : 'Not Found'}`);
+
+    // 2. Verificar se o arquivo já existe na tabela de não processados
+    const existingUnprocessedFile = await checkIfFileExistsInNoProcessTable(baseFilename);
+
+    if (existingUnprocessedFile) {
+      console.log(`Arquivo ${baseFilename} já existe na tabela de não processados. Pulando processamento.`);
+      return { filename: baseFilename, status: 'skipped', message: 'Arquivo já existe na tabela de não processados.' };
+    }
+
+    if (existingTransaction) {
+      console.log(`Arquivo ${baseFilename} já existe no banco de dados. Pulando re-processamento.`);
+      return { filename: baseFilename, status: 'skipped', message: 'Arquivo já existe no banco de dados.' };
+    } else {
+      const fileExtension = path.extname(filePath).toLowerCase();
+      if (fileExtension === '.pdf') {
+        extractedText = await processPDF(filePath);
+      } else if (['.jpg', '.jpeg', '.png', '.gif'].includes(fileExtension)) {
+        extractedText = await processImage(filePath);
+        console.log('RAW OCR OUTPUT:', extractedText); // Adicionando log do texto extraído
+      } else {
+        console.warn(`Tipo de arquivo não suportado: ${baseFilename}`);
+        return { filename: baseFilename, status: 'error', message: 'Tipo de arquivo não suportado' };
+      }
+    }
+
+    if (extractedText) {
+      let textToParse = extractedText;
+      try {
+        const parsed = JSON.parse(extractedText);
+        if (parsed && typeof parsed.text === 'string') {
+          textToParse = parsed.text;
+        }
+      } catch (e) {
+        // Not a JSON string, use as is
+      }
+
+      pixData = parsePixData(textToParse, baseFilename);
+      pixData.filename = baseFilename;
+      pixData.extractedText = textToParse;
+
+      if (existingTransaction) {
+        await databaseService.updatePixTransaction(existingTransaction.id, pixData);
+        console.log(`✅ Dados atualizados no banco para: ${baseFilename}`);
+        return { filename: baseFilename, status: 'success', message: 'Dados atualizados com sucesso.', pixData };
+      } else {
+        await databaseService.savePixTransaction(pixData);
+        console.log(`✅ Dados salvos no banco para: ${baseFilename}`);
+        return { filename: baseFilename, status: 'success', message: 'Dados salvos com sucesso.', pixData };
+      }
+    } else {
+      console.warn(`⚠️ Nenhum texto extraído de: ${baseFilename}`);
+      pixData = parsePixData('', baseFilename);
+      if (Object.keys(pixData).length > 0 && pixData.data) {
+        pixData.filename = baseFilename;
+        pixData.extractedText = extractedText;
+        if (existingTransaction) {
+          await databaseService.updatePixTransaction(existingTransaction.id, pixData);
+          console.log(`✅ Dados parciais (do nome do arquivo) atualizados no banco para: ${baseFilename}`);
+          return { filename: baseFilename, status: 'success', message: 'Dados parciais atualizados com sucesso.', pixData };
+        } else {
+          await databaseService.savePixTransaction(pixData);
+          console.log(`✅ Dados parciais (do nome do arquivo) salvos no banco para: ${baseFilename}`);
+          return { filename: baseFilename, status: 'success', message: 'Dados parciais salvos com sucesso.', pixData };
+        }
+      } else {
+        console.warn(`❌ Não foi possível extrair dados suficientes do arquivo ou nome do arquivo para: ${baseFilename}`);
+        return { filename: baseFilename, status: 'error', message: 'Não foi possível extrair dados suficientes.' };
+      }
+    }
+  } catch (error) {
+    console.error(`Erro ao processar arquivo ${baseFilename}:`, error);
+    return { filename: baseFilename, status: 'error', message: error.message };
+  } finally {
+    processingFiles.delete(baseFilename);
+  }
+}
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -28,7 +145,9 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    cb(null, `${file.originalname}_${timestamp}`);
+    const parsed = path.parse(file.originalname);
+    const newFilename = `${parsed.name}_${timestamp}${parsed.ext}`;
+    cb(null, newFilename);
   }
 });
 
@@ -51,59 +170,42 @@ const upload = multer({
 let processedData = [];
 
 // Endpoint para upload manual de arquivos
-app.post('/api/upload', upload.array('files', 10), async (req, res) => {
+app.post('/api/upload', upload.array('files'), async (req, res) => {
+  if (!req.files || req.files.length === 0) {
+    return res.status(400).send('Nenhum arquivo enviado.');
+  }
+
   try {
-    if (!req.files || req.files.length === 0) {
-      return res.status(400).json({ error: 'Nenhum arquivo enviado' });
+    const results = await Promise.all(req.files.map(file => processFile(file.path, file.originalname)));
+
+    // Limpar arquivos da pasta de upload após o processamento
+    req.files.forEach(file => {
+      fs.unlink(file.path, err => {
+        if (err) {
+          console.error(`Erro ao limpar o arquivo de upload ${file.path}:`, err);
+        }
+      });
+    });
+
+    const successfulUploads = results.filter(r => r.status === 'success');
+    const failedUploads = results.filter(r => r.status === 'error');
+
+    if (successfulUploads.length === 0) {
+        return res.status(400).json({ 
+            message: 'Nenhum arquivo foi processado com sucesso.',
+            details: failedUploads
+        });
     }
 
-    const results = [];
-    
-    for (const file of req.files) {
-      try {
-        let extractedText = '';
-        
-        if (file.mimetype.startsWith('image/')) {
-          extractedText = await processImage(file.path);
-        } else if (file.mimetype === 'application/pdf') {
-          extractedText = await processPDF(file.path);
-        }
-        
-        // Ensure extractedText is a plain string before passing to parsePixData
-        let textToParse = extractedText;
-        try {
-          const parsed = JSON.parse(extractedText);
-          if (parsed && typeof parsed.text === 'string') {
-            textToParse = parsed.text;
-          }
-        } catch (e) {
-          // Not a JSON string, use as is
-        }
+    res.status(200).json({ 
+        message: `${successfulUploads.length} arquivo(s) processado(s) com sucesso!`,
+        successfulUploads,
+        failedUploads 
+    });
 
-        const pixData = parsePixData(textToParse, path.basename(file.path));
-        
-        results.push({
-          filename: file.originalname,
-          type: file.mimetype,
-          extractedText: textToParse, // Store the plain text
-          pixData,
-          processedAt: new Date().toISOString()
-        });
-      } catch (error) {
-        console.error(`Erro ao processar ${file.originalname}:`, error);
-        results.push({
-          filename: file.originalname,
-          type: file.mimetype,
-          error: error.message,
-          processedAt: new Date().toISOString()
-        });
-      }
-    }
-    
-    res.json({ success: true, results });
   } catch (error) {
-    console.error('Erro no upload:', error);
-    res.status(500).json({ error: 'Erro interno do servidor' });
+    console.error('Erro no upload de arquivos:', error);
+    res.status(500).json({ error: 'Erro interno do servidor ao processar arquivos.' });
   }
 });
 
@@ -188,98 +290,7 @@ process.on('uncaughtException', (err) => {
   process.exit(1);
 });
 
-async function processFile(filePath) {
-  const filename = path.basename(filePath);
-  console.log(`Iniciando processamento do arquivo: ${filename}`);
 
-  let extractedText = '';
-  let pixData = {};
-
-  try {
-    // 1. Verificar se o arquivo já existe no banco de dados (tabela principal)
-    const existingTransaction = await databaseService.getPixTransactionByFilename(filename);
-
-    // 2. Verificar se o arquivo já existe na tabela de não processados
-    const existingUnprocessedFile = await checkIfFileExistsInNoProcessTable(filename);
-
-    if (existingUnprocessedFile) {
-      console.log(`Arquivo ${filename} já existe na tabela de não processados. Pulando processamento.`);
-      return; // Não processar novamente se já estiver na tabela de não processados
-    }
-
-    if (existingTransaction) {
-      console.log(`Arquivo ${filename} já existe no banco de dados. Re-processando com texto existente.`);
-      extractedText = existingTransaction.extracted_text; // Usar o texto já extraído do banco
-      // Não precisamos re-extrair do arquivo, apenas re-parsear
-    } else {
-      const fileExtension = path.extname(filePath).toLowerCase();
-      console.log(`DEBUG: File extension for ${filename}: ${fileExtension}`);
-
-      if (fileExtension === '.pdf') {
-        console.log(`DEBUG: Calling processPDF for ${filename}`);
-        extractedText = await processPDF(filePath);
-        console.log(`DEBUG: processPDF returned for ${filename}. Extracted text length: ${extractedText ? extractedText.length : 0}`);
-      } else if (['.jpg', '.jpeg', '.png', '.gif'].includes(fileExtension)) {
-        console.log(`DEBUG: Calling processImage for ${filename}`);
-        extractedText = await processImage(filePath);
-        console.log(`DEBUG: processImage returned for ${filename}. Extracted text length: ${extractedText ? extractedText.length : 0}`);
-      } else {
-        console.warn(`Tipo de arquivo não suportado: ${filename}`);
-        return;
-      }
-    }
-
-    if (extractedText) {
-      console.log(`Texto extraído/recuperado de ${filename}:\n${extractedText.substring(0, 1000)}...`); // Log dos primeiros 1000 caracteres
-      let textToParse = extractedText;
-      try {
-        const parsed = JSON.parse(extractedText);
-        if (parsed && typeof parsed.text === 'string') {
-          textToParse = parsed.text;
-        }
-      } catch (e) {
-        // Not a JSON string, use as is
-      }
-
-      console.log(`DEBUG: Calling parsePixData for ${filename} with text length: ${textToParse.length}`);
-      pixData = parsePixData(textToParse, filename);
-      console.log(`DEBUG: pixData generated for ${filename}:`, pixData);
-      pixData.filename = filename; // Adiciona o nome do arquivo aos dados PIX
-      pixData.extractedText = textToParse; // Salva o texto extraído
-
-      if (existingTransaction) {
-        // Atualizar a transação existente
-        await databaseService.updatePixTransaction(existingTransaction.id, pixData);
-        console.log(`✅ Dados atualizados no banco para: ${filename}`);
-      } else {
-        // Salvar nova transação
-        console.log(`DEBUG: Attempting to save new Pix transaction for ${filename}`);
-        await databaseService.savePixTransaction(pixData);
-        console.log(`✅ Dados salvos no banco para: ${filename}`);
-      }
-    } else {
-      console.warn(`⚠️ Nenhum texto extraído de: ${filename}`);
-      // Se não extraiu texto, ainda tenta salvar com base no nome do arquivo se houver dados
-      pixData = parsePixData('', filename); // Tenta extrair dados apenas do nome do arquivo
-      if (Object.keys(pixData).length > 0 && pixData.data) { // Verifica se algum dado foi extraído do nome do arquivo
-          pixData.filename = filename;
-          pixData.extractedText = extractedText; // Pode ser vazio
-          if (existingTransaction) {
-            await databaseService.updatePixTransaction(existingTransaction.id, pixData);
-            console.log(`✅ Dados parciais (do nome do arquivo) atualizados no banco para: ${filename}`);
-          } else {
-            console.log(`DEBUG: Attempting to save partial Pix transaction for ${filename}`);
-            await databaseService.savePixTransaction(pixData);
-            console.log(`✅ Dados parciais (do nome do arquivo) salvos no banco para: ${filename}`);
-          }
-      } else {
-        console.warn(`❌ Não foi possível extrair dados suficientes do arquivo ou nome do arquivo para: ${filename}`);
-      }
-    }
-  } catch (error) {
-    console.error(`Erro ao processar arquivo ${filename}:`, error);
-  }
-}
 
 // Endpoint para buscar dados de transações PIX não processadas
 app.get('/api/unprocessed-data', async (req, res) => {

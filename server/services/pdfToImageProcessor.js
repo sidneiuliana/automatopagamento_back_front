@@ -11,7 +11,7 @@ const fs = require('fs');
 async function processPDFAsImage(pdfPath) {
   try {
     console.log(`🖼️ Convertendo PDF para imagem: ${pdfPath}`);
-    
+
     // Configuração para conversão PDF -> imagem
     const convert = pdf2pic.fromPath(pdfPath, {
       density: 300,           // DPI alto para melhor qualidade
@@ -23,18 +23,24 @@ async function processPDFAsImage(pdfPath) {
     });
 
     // Converter primeira página para imagem
-    const result = await convert(1, { responseType: "base64" });
-    
-    if (!result.base64) {
+    const result = await convert(1);
+
+    console.log('Resultado da conversão:', result);
+
+    if (!result.path) {
       throw new Error('Falha ao converter PDF para imagem');
     }
 
+    // Ler imagem como base64
+    const imageBuffer = fs.readFileSync(result.path);
+    const base64 = imageBuffer.toString('base64');
+
     console.log(`✅ PDF convertido para imagem com sucesso`);
-    
+
     // Processar imagem com OCR
     console.log(`🔍 Iniciando OCR na imagem convertida...`);
     const { data: { text } } = await Tesseract.recognize(
-      `data:image/png;base64,${result.base64}`,
+      `data:image/png;base64,${base64}`,
       'por',
       {
         logger: m => {
@@ -44,6 +50,9 @@ async function processPDFAsImage(pdfPath) {
         }
       }
     );
+
+    // Limpar imagem temporária
+    fs.unlinkSync(result.path);
 
     console.log(`✅ OCR concluído. Texto extraído: ${text.length} caracteres`);
     return text;

@@ -9,10 +9,21 @@
     "client": "cd client && npm start",
     "install-all": "npm install && cd server && npm install && cd ../client && npm install"
   },
-  "keywords": ["pix", "ocr", "pdf", "pagamento", "automatizacao"],
+  "keywords": [
+    "pix",
+    "ocr",
+    "pdf",
+    "pagamento",
+    "automatizacao"
+  ],
   "author": "Sidnei",
   "license": "MIT",
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "pdf-parse": "^2.4.5",
+    "pdf2pic": "^3.2.0",
+    "tesseract.js": "^6.0.1"
   }
 }
