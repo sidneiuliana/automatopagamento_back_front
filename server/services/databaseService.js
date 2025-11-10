@@ -1,4 +1,4 @@
-const connection = require('../config/database');
+const { query } = require('../config/database');
 const { writeDebugToFile } = require('./pixParser');
 
 /**
@@ -8,31 +8,31 @@ const { writeDebugToFile } = require('./pixParser');
  */
 async function savePixTransaction(pixData) {
   writeDebugToFile(pixData.filename, 'DEBUG: savePixTransaction called.');
-  return new Promise((resolve, reject) => {
-    const {
-      filename,
-      valor,
-      destinatario,
-      chavePix,
-      data,
-      hora,
-      banco,
-      tipoChave,
-      status,
-      idTransacao,
-      observacoes,
-      extractedText,
-      pagador // Adicionar o campo pagador aqui
-    } = pixData;
+  const {
+    filename,
+    valor,
+    destinatario,
+    chavePix,
+    data,
+    hora,
+    banco,
+    tipoChave,
+    status,
+    idTransacao,
+    observacoes,
+    extractedText,
+    pagador // Adicionar o campo pagador aqui
+  } = pixData;
 
-    // Verificar se valor, destinatario ou pagador são nulos/vazios
-    const isDataIncomplete = valor === null || !destinatario || !pagador;
-    const tableName = isDataIncomplete ? 'pix_transactions_no_process' : 'pix_transactions';
+  // Verificar se valor, destinatario ou pagador são nulos/vazios
+  const isDataIncomplete = valor === null || !destinatario || !pagador;
+  const tableName = isDataIncomplete ? 'pix_transactions_no_process' : 'pix_transactions';
 
+  try {
     const sql = `
       INSERT INTO ${tableName} (
-        filename, valor, destinatario, chave_pix, data_transferencia, 
-        hora_transferencia, banco, tipo_chave, status, id_transacao, 
+        filename, valor, destinatario, chave_pix, data_transferencia,
+        hora_transferencia, banco, tipo_chave, status, id_transacao,
         observacoes, extracted_text, pagador
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
@@ -46,28 +46,28 @@ async function savePixTransaction(pixData) {
     // Função para converter data brasileira para formato MySQL
     const convertDateToMySQL = (dateStr) => {
       if (!dateStr) return null;
-      
+
       // Tenta diferentes formatos de data
       const formats = [
         /(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{4})/, // DD/MM/YYYY, DD-MM-YYYY, DD.MM.YYYY
         /(\d{4})[\/\-\.](\d{1,2})[\/\-\.](\d{1,2})/  // YYYY/MM/DD, YYYY-MM-DD, YYYY.MM.DD
       ];
-      
+
       for (const format of formats) {
         const match = dateStr.match(format);
         if (match) {
           const [, part1, part2, part3] = match;
-          
+
           // Se primeiro grupo tem 4 dígitos, já está no formato correto
           if (part1.length === 4) {
             return `${part1}-${part2.padStart(2, '0')}-${part3.padStart(2, '0')}`;
           }
-          
+
           // Se não, converte de DD/MM/YYYY para YYYY-MM-DD
           return `${part3}-${part2.padStart(2, '0')}-${part1.padStart(2, '0')}`;
         }
       }
-      
+
       return null;
     };
 
@@ -90,17 +90,14 @@ async function savePixTransaction(pixData) {
     writeDebugToFile(filename, `DEBUG: SQL Query: ${sql}`);
     writeDebugToFile(filename, `DEBUG: SQL Values: ${JSON.stringify(values)}`);
 
-    connection.query(sql, values, (err, result) => {
-      if (err) {
-        writeDebugToFile(filename, `ERROR: Erro ao salvar no banco (${tableName}): ${err.message}`);
-        console.error(`Erro ao salvar no banco (${tableName}):`, err);
-        reject(err);
-      } else {
-        console.log(`✅ Transação salva na tabela ${tableName} com ID: ${result.insertId}`);
-        resolve({ success: true, insertId: result.insertId, tableName: tableName });
-      }
-    });
-  });
+    const result = await query(sql, values);
+    console.log(`✅ Transação salva na tabela ${tableName} com ID: ${result.insertId}`);
+    return { success: true, insertId: result.insertId, tableName: tableName };
+  } catch (err) {
+    writeDebugToFile(filename, `ERROR: Erro ao salvar no banco (${tableName}): ${err.message}`);
+    console.error(`Erro ao salvar no banco (${tableName}):`, err);
+    throw err;
+  }
 }
 
 /**
@@ -108,18 +105,14 @@ async function savePixTransaction(pixData) {
  * @returns {Promise<Array>} - Lista de transações
  */
 async function getAllPixTransactions() {
-  return new Promise((resolve, reject) => {
+  try {
     const sql = 'SELECT * FROM pix_transactions ORDER BY processed_at DESC';
-    
-    connection.query(sql, (err, results) => {
-      if (err) {
-        console.error('Erro ao buscar transações:', err);
-        reject(err);
-      } else {
-        resolve(results);
-      }
-    });
-  });
+    const results = await query(sql);
+    return results;
+  } catch (err) {
+    console.error('Erro ao buscar transações:', err);
+    throw err;
+  }
 }
 
 /**
@@ -127,18 +120,14 @@ async function getAllPixTransactions() {
  * @returns {Promise<Array>} - Lista de transações
  */
 async function getProcessedPixTransactions() {
-  return new Promise((resolve, reject) => {
+  try {
     const sql = 'SELECT * FROM pix_transactions ORDER BY processed_at DESC';
-    
-    connection.query(sql, (err, results) => {
-      if (err) {
-        console.error('Erro ao buscar transações processadas:', err);
-        reject(err);
-      } else {
-        resolve(results);
-      }
-    });
-  });
+    const results = await query(sql);
+    return results;
+  } catch (err) {
+    console.error('Erro ao buscar transações processadas:', err);
+    throw err;
+  }
 }
 
 /**
@@ -146,18 +135,14 @@ async function getProcessedPixTransactions() {
  * @returns {Promise<Array>} - Lista de transações não processadas
  */
 async function getUnprocessedPixTransactions() {
-  return new Promise((resolve, reject) => {
+  try {
     const sql = 'SELECT * FROM pix_transactions_no_process ORDER BY processed_at DESC';
-    
-    connection.query(sql, (err, results) => {
-      if (err) {
-        console.error('Erro ao buscar transações não processadas:', err);
-        reject(err);
-      } else {
-        resolve(results);
-      }
-    });
-  });
+    const results = await query(sql);
+    return results;
+  } catch (err) {
+    console.error('Erro ao buscar transações não processadas:', err);
+    throw err;
+  }
 }
 
 /**
@@ -167,22 +152,18 @@ async function getUnprocessedPixTransactions() {
  * @returns {Promise<Array>} - Lista de transações no período
  */
 async function getPixTransactionsByDateRange(startDate, endDate) {
-  return new Promise((resolve, reject) => {
+  try {
     const sql = `
-      SELECT * FROM pix_transactions 
-      WHERE data_transferencia BETWEEN ? AND ? 
+      SELECT * FROM pix_transactions
+      WHERE data_transferencia BETWEEN ? AND ?
       ORDER BY data_transferencia DESC
     `;
-    
-    connection.query(sql, [startDate, endDate], (err, results) => {
-      if (err) {
-        console.error('Erro ao buscar transações por período:', err);
-        reject(err);
-      } else {
-        resolve(results);
-      }
-    });
-  });
+    const results = await query(sql, [startDate, endDate]);
+    return results;
+  } catch (err) {
+    console.error('Erro ao buscar transações por período:', err);
+    throw err;
+  }
 }
 
 /**
@@ -191,18 +172,14 @@ async function getPixTransactionsByDateRange(startDate, endDate) {
  * @returns {Promise<Array>} - Lista de transações do banco
  */
 async function getPixTransactionsByBank(banco) {
-  return new Promise((resolve, reject) => {
+  try {
     const sql = 'SELECT * FROM pix_transactions WHERE banco = ? ORDER BY processed_at DESC';
-    
-    connection.query(sql, [banco], (err, results) => {
-      if (err) {
-        console.error('Erro ao buscar transações por banco:', err);
-        reject(err);
-      } else {
-        resolve(results);
-      }
-    });
-  });
+    const results = await query(sql, [banco]);
+    return results;
+  } catch (err) {
+    console.error('Erro ao buscar transações por banco:', err);
+    throw err;
+  }
 }
 
 /**
@@ -211,20 +188,15 @@ async function getPixTransactionsByBank(banco) {
  * @returns {Promise<boolean>} - True se o arquivo existir, false caso contrário.
  */
 async function checkIfFileExists(filename) {
-  return new Promise((resolve, reject) => {
+  try {
     const sql = 'SELECT COUNT(*) AS count FROM pix_transactions WHERE filename = ?';
-    // console.log(`DEBUG: checkIfFileExists - SQL: ${sql}, Filename: ${filename}`);
-    connection.query(sql, [filename], (err, results) => {
-      if (err) {
-        console.error('Erro ao verificar existência do arquivo no banco:', err);
-        reject(err);
-      } else {
-        const count = results[0].count;
-        // console.log(`DEBUG: checkIfFileExists - Count for ${filename}: ${count}`);
-        resolve(count > 0);
-      }
-    });
-  });
+    const results = await query(sql, [filename]);
+    const count = results[0].count;
+    return count > 0;
+  } catch (err) {
+    console.error('Erro ao verificar existência do arquivo no banco:', err);
+    throw err;
+  }
 }
 
 /**
@@ -233,18 +205,15 @@ async function checkIfFileExists(filename) {
  * @returns {Promise<Object>} - Resultado da exclusão.
  */
 async function deletePixTransactionByFilename(filename) {
-  return new Promise((resolve, reject) => {
+  try {
     const sql = 'DELETE FROM pix_transactions WHERE filename = ?';
-    connection.query(sql, [filename], (err, result) => {
-      if (err) {
-        console.error('Erro ao deletar transação do banco:', err);
-        reject(err);
-      } else {
-        console.log(`✅ Transação para o arquivo ${filename} deletada do banco. Linhas afetadas: ${result.affectedRows}`);
-        resolve({ success: true, affectedRows: result.affectedRows });
-      }
-    });
-  });
+    const result = await query(sql, [filename]);
+    console.log(`✅ Transação para o arquivo ${filename} deletada do banco. Linhas afetadas: ${result.affectedRows}`);
+    return { success: true, affectedRows: result.affectedRows };
+  } catch (err) {
+    console.error('Erro ao deletar transação do banco:', err);
+    throw err;
+  }
 }
 
 /**
@@ -253,17 +222,14 @@ async function deletePixTransactionByFilename(filename) {
  * @returns {Promise<Object|null>} - Os dados da transação PIX ou null se não encontrada.
  */
 async function getPixTransactionByFilename(filename) {
-  return new Promise((resolve, reject) => {
+  try {
     const sql = 'SELECT * FROM pix_transactions WHERE filename = ?';
-    connection.query(sql, [filename], (err, results) => {
-      if (err) {
-        console.error('Erro ao buscar transação por nome de arquivo:', err);
-        reject(err);
-      } else {
-        resolve(results.length > 0 ? results[0] : null);
-      }
-    });
-  });
+    const results = await query(sql, [filename]);
+    return results.length > 0 ? results[0] : null;
+  } catch (err) {
+    console.error('Erro ao buscar transação por nome de arquivo:', err);
+    throw err;
+  }
 }
 
 /**
@@ -273,7 +239,7 @@ async function getPixTransactionByFilename(filename) {
  * @returns {Promise<Object>} - Resultado da atualização.
  */
 async function updatePixTransaction(id, pixData) {
-  return new Promise((resolve, reject) => {
+  try {
     const {
       valor,
       destinatario,
@@ -314,91 +280,117 @@ async function updatePixTransaction(id, pixData) {
     // Função para converter data brasileira para formato MySQL
     const convertDateToMySQL = (dateStr) => {
       if (!dateStr) return null;
-      
+
       // Tenta diferentes formatos de data
       const formats = [
         /(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{4})/, // DD/MM/YYYY, DD-MM-YYYY, DD.MM.YYYY
         /(\d{4})[\/\-\.](\d{1,2})[\/\-\.](\d{1,2})/  // YYYY/MM/DD, YYYY-MM-DD, YYYY.MM.DD
       ];
-      
+
       for (const format of formats) {
         const match = dateStr.match(format);
         if (match) {
           const [, part1, part2, part3] = match;
-          
+
           // Se primeiro grupo tem 4 dígitos, já está no formato correto
           if (part1.length === 4) {
             return `${part1}-${part2.padStart(2, '0')}-${part3.padStart(2, '0')}`;
           }
-          
+
           // Se não, converte de DD/MM/YYYY para YYYY-MM-DD
           return `${part3}-${part2.padStart(2, '0')}-${part1.padStart(2, '0')}`;
         }
       }
-      
+
       return null;
     };
 
     const values = [
       valor ? parseFloat(String(valor).replace(',', '.')) : null,
-      destinatario, 
+      destinatario,
       truncateString(chavePix, 500),
-      convertDateToMySQL(data), 
+      convertDateToMySQL(data),
       hora,
       truncateString(banco, 200),
       truncateString(tipoChave, 100),
       truncateString(status, 100),
       truncateString(idTransacao, 500),
-      observacoes, 
+      observacoes,
       pagador,
       id
     ];
 
-    connection.query(sql, values, (err, result) => {
-      if (err) {
-        console.error('Erro ao atualizar transação no banco:', err);
-        reject(err);
-      } else {
-        console.log(`✅ Transação com ID ${id} atualizada no banco. Linhas afetadas: ${result.affectedRows}`);
-        resolve({ success: true, affectedRows: result.affectedRows });
-      }
-    });
-  });
+    const result = await query(sql, values);
+    console.log(`✅ Transação com ID ${id} atualizada no banco. Linhas afetadas: ${result.affectedRows}`);
+    return { success: true, affectedRows: result.affectedRows };
+  } catch (err) {
+    console.error('Erro ao atualizar transação no banco:', err);
+    throw err;
+  }
+}
+
+/**
+ * Cria a tabela pix_transactions se ela não existir.
+ */
+async function createPixTransactionsTable() {
+  try {
+    const createTableSql = `
+      CREATE TABLE IF NOT EXISTS pix_transactions (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        filename VARCHAR(500) NOT NULL,
+        valor DECIMAL(10, 2),
+        destinatario TEXT,
+        chave_pix VARCHAR(500),
+        data_transferencia DATE,
+        hora_transferencia TIME,
+        banco VARCHAR(200),
+        tipo_chave VARCHAR(100),
+        status VARCHAR(100),
+        id_transacao VARCHAR(500),
+        observacoes TEXT,
+        extracted_text LONGTEXT,
+        pagador TEXT,
+        processed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `;
+    await query(createTableSql);
+    console.log('✅ Tabela pix_transactions criada/verificada com sucesso!');
+  } catch (err) {
+    console.error('Erro ao criar/verificar a tabela pix_transactions:', err);
+    throw err;
+  }
 }
 
 /**
  * Cria a tabela pix_transactions_no_process se ela não existir.
  */
 async function createPixTransactionsNoProcessTable() {
-  const createTableSql = `
-    CREATE TABLE IF NOT EXISTS pix_transactions_no_process (
-      id INT AUTO_INCREMENT PRIMARY KEY,
-      filename VARCHAR(500) NOT NULL,
-      valor DECIMAL(10, 2),
-      destinatario TEXT,
-      chave_pix VARCHAR(500),
-      data_transferencia DATE,
-      hora_transferencia TIME,
-      banco VARCHAR(200),
-      tipo_chave VARCHAR(100),
-      status VARCHAR(100),
-      id_transacao VARCHAR(500),
-      observacoes TEXT,
-      extracted_text LONGTEXT,
-      pagador TEXT,
-      processed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
-  `;
-  return new Promise((resolve, reject) => {
-    connection.query(createTableSql, (err) => {
-      if (err) {
-        console.error('Erro ao criar/verificar a tabela pix_transactions_no_process:', err);
-        return reject(err);
-      }
-      console.log('✅ Tabela pix_transactions_no_process criada/verificada com sucesso!');
-      resolve();
-    });
-  });
+  try {
+    const createTableSql = `
+      CREATE TABLE IF NOT EXISTS pix_transactions_no_process (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        filename VARCHAR(500) NOT NULL,
+        valor DECIMAL(10, 2),
+        destinatario TEXT,
+        chave_pix VARCHAR(500),
+        data_transferencia DATE,
+        hora_transferencia TIME,
+        banco VARCHAR(200),
+        tipo_chave VARCHAR(100),
+        status VARCHAR(100),
+        id_transacao VARCHAR(500),
+        observacoes TEXT,
+        extracted_text LONGTEXT,
+        pagador TEXT,
+        processed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `;
+    await query(createTableSql);
+    console.log('✅ Tabela pix_transactions_no_process criada/verificada com sucesso!');
+  } catch (err) {
+    console.error('Erro ao criar/verificar a tabela pix_transactions_no_process:', err);
+    throw err;
+  }
 }
 
 /**
@@ -407,18 +399,15 @@ async function createPixTransactionsNoProcessTable() {
  * @returns {Promise<boolean>} - True se o arquivo existir, false caso contrário.
  */
 async function checkIfFileExistsInNoProcessTable(filename) {
-  return new Promise((resolve, reject) => {
+  try {
     const sql = 'SELECT COUNT(*) AS count FROM pix_transactions_no_process WHERE filename = ?';
-    connection.query(sql, [filename], (err, results) => {
-      if (err) {
-        console.error('Erro ao verificar existência do arquivo na tabela pix_transactions_no_process:', err);
-        reject(err);
-      } else {
-        const count = results[0].count;
-        resolve(count > 0);
-      }
-    });
-  });
+    const results = await query(sql, [filename]);
+    const count = results[0].count;
+    return count > 0;
+  } catch (err) {
+    console.error('Erro ao verificar existência do arquivo na tabela pix_transactions_no_process:', err);
+    throw err;
+  }
 }
 
 module.exports = {
@@ -430,8 +419,9 @@ module.exports = {
   deletePixTransactionByFilename,
   getPixTransactionByFilename,
   updatePixTransaction,
+  createPixTransactionsTable,
   createPixTransactionsNoProcessTable,
   getProcessedPixTransactions,
   getUnprocessedPixTransactions,
-  checkIfFileExistsInNoProcessTable // Adicionar a nova função aqui
+  checkIfFileExistsInNoProcessTable
 };

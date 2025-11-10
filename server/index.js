@@ -9,7 +9,7 @@ const databaseService = require('./services/databaseService');
 const { processImage } = require('./services/imageProcessor');
 const { processPDF } = require('./services/pdfProcessor');
 const { parsePixData } = require('./services/pixParser');
-const { savePixTransaction, getAllPixTransactions, createPixTransactionsNoProcessTable, checkIfFileExistsInNoProcessTable } = require('./services/databaseService');
+const { savePixTransaction, getAllPixTransactions, createPixTransactionsTable, createPixTransactionsNoProcessTable, checkIfFileExistsInNoProcessTable } = require('./services/databaseService');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -178,7 +178,8 @@ app.listen(PORT, () => {
   // Iniciar monitoramento da pasta
   watchArquivosFolder();
 
-  // Criar tabela pix_transactions_no_process ao iniciar o servidor
+  // Criar tabelas ao iniciar o servidor
+  databaseService.createPixTransactionsTable();
   databaseService.createPixTransactionsNoProcessTable();
 });
 
@@ -212,21 +213,32 @@ async function processFile(filePath) {
       extractedText = existingTransaction.extracted_text; // Usar o texto já extraído do banco
       // Não precisamos re-extrair do arquivo, apenas re-parsear
     } else {
-      const fileExtension = path.extname(filePath).toLowerCase();
-      console.log(`DEBUG: File extension for ${filename}: ${fileExtension}`);
+    // Extract original filename and extension, accounting for timestamp suffix
+    const parts = filename.split('_');
+    let originalFilename = filename;
+    let fileExtension = path.extname(filename).toLowerCase();
 
-      if (fileExtension === '.pdf') {
-        console.log(`DEBUG: Calling processPDF for ${filename}`);
-        extractedText = await processPDF(filePath);
-        console.log(`DEBUG: processPDF returned for ${filename}. Extracted text length: ${extractedText ? extractedText.length : 0}`);
-      } else if (['.jpg', '.jpeg', '.png', '.gif'].includes(fileExtension)) {
-        console.log(`DEBUG: Calling processImage for ${filename}`);
-        extractedText = await processImage(filePath);
-        console.log(`DEBUG: processImage returned for ${filename}. Extracted text length: ${extractedText ? extractedText.length : 0}`);
-      } else {
-        console.warn(`Tipo de arquivo não suportado: ${filename}`);
-        return;
-      }
+    // Check if the last part is a timestamp (format: YYYY-MM-DDTHH-MM-SS-SSSZ)
+    const timestampPattern = /^\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}-\d{3}Z$/;
+    if (parts.length > 1 && timestampPattern.test(parts[parts.length - 1])) {
+      originalFilename = parts.slice(0, -1).join('_');
+      fileExtension = path.extname(originalFilename).toLowerCase();
+    }
+
+    console.log(`DEBUG: Original filename: ${originalFilename}, File extension: ${fileExtension}`);
+
+    if (fileExtension === '.pdf') {
+      console.log(`DEBUG: Calling processPDF for ${filename}`);
+      extractedText = await processPDF(filePath);
+      console.log(`DEBUG: processPDF returned for ${filename}. Extracted text length: ${extractedText ? extractedText.length : 0}`);
+    } else if (['.jpg', '.jpeg', '.png', '.gif'].includes(fileExtension)) {
+      console.log(`DEBUG: Calling processImage for ${filename}`);
+      extractedText = await processImage(filePath);
+      console.log(`DEBUG: processImage returned for ${filename}. Extracted text length: ${extractedText ? extractedText.length : 0}`);
+    } else {
+      console.warn(`Tipo de arquivo não suportado: ${filename} (extensão detectada: ${fileExtension})`);
+      return;
+    }
     }
 
     if (extractedText) {

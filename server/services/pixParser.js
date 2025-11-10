@@ -368,21 +368,6 @@ writeDebugToFile(filename, `DEBUG: Nubank idTransacaoMatch: ${JSON.stringify(idT
       }
     }
 
-    // Identificar status
-    // Adicionar logs de depuração para verificar os valores antes de isProcessedConditionMet
-    writeDebugToFile(filename, `DEBUG: pagador: ${pixData.pagador}, destinatario: ${pixData.destinatario}, idTransacao: ${pixData.idTransacao}`);
-
-    const isProcessedConditionMet = pixData.pagador && pixData.destinatario && pixData.idTransacao;
-    writeDebugToFile(filename, `DEBUG: isProcessedConditionMet: ${isProcessedConditionMet}`);
-
-    if (isProcessedConditionMet) {
-      pixData.status = 'Processado';
-      writeDebugToFile(filename, `DEBUG: Status atualizado para: ${pixData.status}`);
-    } else if (pixData.status !== 'Processado') {
-      pixData.status = 'PDF Escaneado - Processamento Manual Necessário';
-      writeDebugToFile(filename, `DEBUG: Status definido como: ${pixData.status}`);
-    }
-
     // Extrair observações
     const obsPatterns = [
       /observa[çc][ãa]o[:\s]+([^,\n]+)/g,
@@ -402,7 +387,7 @@ writeDebugToFile(filename, `DEBUG: Nubank idTransacaoMatch: ${JSON.stringify(idT
     if (pixData.banco === 'Caixa Econômica Federal') {
       //console.log('Detectado comprovante da Caixa Econômica Federal. Iniciando extração específica...');
       //console.log('Normalized Text for Caixa:', normalizedText);
-  
+
       // Extrair Nome do Recebedor
       const recebedorCaixaPattern = /dados do recebedor\s*nome\s*([^]+?)\s*(?:cpf|institui[çc][ãa]o|dados do pagador|$)/i;
       const recebedorMatch = normalizedText.match(recebedorCaixaPattern);
@@ -411,7 +396,7 @@ writeDebugToFile(filename, `DEBUG: Nubank idTransacaoMatch: ${JSON.stringify(idT
         pixData.destinatario = recebedorMatch[1].trim();
         //console.log(`👤 Destinatário (Caixa) encontrado: ${pixData.destinatario}`);
       }
-  
+
       // Extrair Nome do Pagador
       const pagadorCaixaPattern = /dados do pagador\s*nome\s*([^]+?)\s*(?:cpf|institui[çc][ãa]o|$)/i;
       const pagadorMatch = normalizedText.match(pagadorCaixaPattern);
@@ -466,7 +451,7 @@ writeDebugToFile(filename, `DEBUG: Nubank idTransacaoMatch: ${JSON.stringify(idT
     if (pixData.banco === 'BCO SANTANDER (BRASIL) S.A.') {
       console.log('Detectado comprovante do Santander. Iniciando extração específica...');
       console.log('Normalized Text for Santander:', normalizedText);
-  
+
       // Extrair Destinatário (Para)
       const destinatarioSantanderPattern = /dados do recebedor\s*para\s*([^\n]+?)(?:\s*cpf|\s*cnpj|\s*chave|\s*institui[çc][ãa]o|$)/i;
       const destinatarioSantanderMatch = normalizedText.match(destinatarioSantanderPattern);
@@ -474,7 +459,7 @@ writeDebugToFile(filename, `DEBUG: Nubank idTransacaoMatch: ${JSON.stringify(idT
         pixData.destinatario = destinatarioSantanderMatch[1].trim();
         console.log(`👤 Destinatário (Santander) encontrado: ${pixData.destinatario}`);
       }
-  
+
       // Extrair Pagador (De)
       const pagadorSantanderPattern = /dados do pagador\s*de\s*([^\n]+?)(?:\s*cpf|\s*cnpj|\s*institui[çc][ãa]o|\s*agencia|\s*conta|\s*data|\s*valor|\s*id|\s*transa[çc][ãa]o|\s*protocolo|\s*para|\s*informa[çc][ãa]o para o recebedor|$)/i;
       const pagadorSantanderMatch = normalizedText.match(pagadorSantanderPattern);
@@ -482,7 +467,7 @@ writeDebugToFile(filename, `DEBUG: Nubank idTransacaoMatch: ${JSON.stringify(idT
         pixData.pagador = pagadorSantanderMatch[1].trim();
         console.log(`👤 Pagador (Santander) encontrado: ${pixData.pagador}`);
       }
-  
+
       // Extrair Banco (Instituição) do pagador
       const bancoPagadorSantanderPattern = /dados do pagador\s*(?:de\s*[^\n]+?\s*)?institui[çc][ãa]o\s*([^\n]+?)(?:\s*comprovante|$)/i;
       const bancoPagadorSantanderMatch = normalizedText.match(bancoPagadorSantanderPattern);
@@ -490,7 +475,7 @@ writeDebugToFile(filename, `DEBUG: Nubank idTransacaoMatch: ${JSON.stringify(idT
         pixData.banco = bancoPagadorSantanderMatch[1].trim();
         console.log(`🏦 Banco do Pagador (Santander) encontrado: ${pixData.banco}`);
       }
-  
+
       // Extrair Observações (Informação para o recebedor)
       const observacoesSantanderPattern = /informa[çc][ãa]o para o recebedor\s*([^\n]+?)(?:\s*forma de pagamento|\s*ag\s*\d+|\s*cpf|\s*cnpj|\s*institui[çc][ãa]o|\s*agencia|\s*conta|\s*data|\s*valor|\s*id|\s*transa[çc][ãa]o|\s*protocolo|\s*para|\s*de|$)/i;
       const observacoesSantanderMatch = normalizedText.match(observacoesSantanderPattern);
@@ -504,7 +489,7 @@ writeDebugToFile(filename, `DEBUG: Nubank idTransacaoMatch: ${JSON.stringify(idT
     if (pixData.banco === 'Banco do Brasil') {
       console.log('Detectado comprovante do Banco do Brasil. Iniciando extração específica...');
       console.log('Normalized Text for Banco do Brasil:', normalizedText);
-  
+
       // Extrair Pagador
       const pagadorBBPattern = /pagador\s*([^\n]+?)(?:\s*cpf|\s*cnpj|\s*institui[çc][ãa]o|\s*agencia|\s*conta|\s*data|\s*valor|\s*id|\s*transa[çc][ãa]o|\s*protocolo|$)/i;
       const pagadorBBMatch = normalizedText.match(pagadorBBPattern);
@@ -514,8 +499,229 @@ writeDebugToFile(filename, `DEBUG: Nubank idTransacaoMatch: ${JSON.stringify(idT
       }
     }
 
+    // Lógica específica para Bradesco
+    if (normalizedText.includes('bradesco') || normalizedText.includes('transação concluída pelo bradesco celular')) {
+      console.log('Detectado comprovante do Bradesco. Iniciando extração específica...');
 
+      // Extrair Pagador (Dados de quem pagou Nome)
+      const pagadorBradescoPattern = /dados de quem pagou\s*nome[:\s]*([^\n]+?)(?:\s*cpf|\s*institui[çc][ãa]o|$)/i;
+      const pagadorBradescoMatch = normalizedText.match(pagadorBradescoPattern);
+      if (pagadorBradescoMatch && pagadorBradescoMatch[1]) {
+        pixData.pagador = pagadorBradescoMatch[1].trim();
+        console.log(`👤 Pagador (Bradesco) encontrado: ${pixData.pagador}`);
+      }
 
+      // Extrair Destinatário (Dados de quem recebeu Nome)
+      const destinatarioBradescoPattern = /dados de quem recebeu\s*nome[:\s]*([^\n]+?)(?:\s*cpf|\s*institui[çc][ãa]o|\s*chave|$)/i;
+      const destinatarioBradescoMatch = normalizedText.match(destinatarioBradescoPattern);
+      if (destinatarioBradescoMatch && destinatarioBradescoMatch[1]) {
+        pixData.destinatario = destinatarioBradescoMatch[1].trim();
+        console.log(`👤 Destinatário (Bradesco) encontrado: ${pixData.destinatario}`);
+      }
+
+      // Extrair Banco do Pagador
+      const pagadorBancoBradescoPattern = /dados de quem pagou\s*[^\n]+?\s*institui[çc][ãa]o[:\s]*([^\n]+?)(?:\s*dados da transa[çc][ãa]o|$)/i;
+      const pagadorBancoBradescoMatch = normalizedText.match(pagadorBancoBradescoPattern);
+      if (pagadorBancoBradescoMatch && pagadorBancoBradescoMatch[1]) {
+        pixData.pagadorBanco = pagadorBancoBradescoMatch[1].trim();
+        console.log(`🏦 Banco Pagador (Bradesco) encontrado: ${pixData.pagadorBanco}`);
+      }
+
+      // Extrair Banco do Destinatário
+      const bancoBradescoPattern = /dados de quem recebeu\s*[^\n]+?\s*institui[çc][ãa]o[:\s]*([^\n]+?)(?:\s*chave|$)/i;
+      const bancoBradescoMatch = normalizedText.match(bancoBradescoPattern);
+      if (bancoBradescoMatch && bancoBradescoMatch[1]) {
+        pixData.banco = bancoBradescoMatch[1].trim();
+        console.log(`🏦 Banco Destino (Bradesco) encontrado: ${pixData.banco}`);
+      }
+
+      // Extrair Chave PIX
+      const chavePixBradescoPattern = /chave[:\s]*([^\n]+?)(?:\s*transa[çc][ãa]o|$)/i;
+      const chavePixBradescoMatch = normalizedText.match(chavePixBradescoPattern);
+      if (chavePixBradescoMatch && chavePixBradescoMatch[1]) {
+        pixData.chavePix = chavePixBradescoMatch[1].trim();
+        console.log(`🔑 Chave PIX (Bradesco) encontrada: ${pixData.chavePix}`);
+      }
+
+      // Extrair ID da Transação (Número de Controle)
+      const idTransacaoBradescoPattern = /n[úu]mero de controle[:\s]*([a-zA-Z0-9]+)/i;
+      const idTransacaoBradescoMatch = normalizedText.match(idTransacaoBradescoPattern);
+      if (idTransacaoBradescoMatch && idTransacaoBradescoMatch[1]) {
+        pixData.idTransacao = idTransacaoBradescoMatch[1].trim();
+        console.log(`🆔 ID da Transação (Bradesco) encontrado: ${pixData.idTransacao}`);
+      }
+
+      // Extrair Observações
+      const observacoesBradescoPattern = /transa[çc][ãa]o conclu[íi]da pelo bradesco celular/i;
+      const observacoesBradescoMatch = normalizedText.match(observacoesBradescoPattern);
+      if (observacoesBradescoMatch) {
+        pixData.observacoes = 'Transação concluída pelo Bradesco Celular';
+        console.log(`📝 Observações (Bradesco) encontradas: ${pixData.observacoes}`);
+      }
+
+      // Extrair Valor
+      const valorBradescoPattern = /valor[:\s]*r\$\s*(\d{1,3}(?:\.\d{3})*(?:,\d{2})?)/i;
+      const valorBradescoMatch = normalizedText.match(valorBradescoPattern);
+      if (valorBradescoMatch && valorBradescoMatch[1]) {
+        pixData.valor = parseFloat(valorBradescoMatch[1].replace('.', '').replace(',', '.'));
+        console.log(`💰 Valor (Bradesco) encontrado: ${pixData.valor}`);
+      }
+
+      // Extrair Data e Hora (Data e Hora da transação)
+      const dataHoraBradescoPattern = /data e hora[:\s]*(\d{1,2})\/(\d{1,2})\/(\d{4})\s+(\d{1,2}):(\d{2}):(\d{2})/i;
+      const dataHoraBradescoMatch = normalizedText.match(dataHoraBradescoPattern);
+      if (dataHoraBradescoMatch) {
+        const [, day, month, year, hour, minute, second] = dataHoraBradescoMatch;
+        pixData.data = `${day}/${month}/${year}`;
+        pixData.hora = `${hour}:${minute}:${second}`;
+        console.log(`📅 Data (Bradesco) encontrada: ${pixData.data}`);
+        console.log(`⏰ Hora (Bradesco) encontrada: ${pixData.hora}`);
+      }
+    }
+
+    // Lógica específica para BMG
+    if (normalizedText.includes('bancobmgs/a') || normalizedText.includes('aplicativobmg') || normalizedText.includes('comprovante de envio pix')) {
+      console.log('Detectado comprovante do BMG. Iniciando extração específica...');
+
+      // Extrair Pagador (De)
+      const pagadorBMGPattern = /de\s+([^\n]+?)(?:\s*cpf\/cnpj|\s*institui[çc][ãa]o|$)/i;
+      const pagadorBMGMatch = normalizedText.match(pagadorBMGPattern);
+      if (pagadorBMGMatch && pagadorBMGMatch[1]) {
+        pixData.pagador = pagadorBMGMatch[1].trim();
+        console.log(`👤 Pagador (BMG) encontrado: ${pixData.pagador}`);
+      }
+
+      // Extrair Destinatário (Para)
+      const destinatarioBMGPattern = /para\s+([^\n]+?)(?:\s*cpf\/cnpj|\s*institui[çc][ãa]o|$)/i;
+      const destinatarioBMGMatch = normalizedText.match(destinatarioBMGPattern);
+      if (destinatarioBMGMatch && destinatarioBMGMatch[1]) {
+        pixData.destinatario = destinatarioBMGMatch[1].trim();
+        console.log(`👤 Destinatário (BMG) encontrado: ${pixData.destinatario}`);
+      }
+
+      // Extrair Banco do Pagador
+      const pagadorBancoBMGPattern = /de\s+[^\n]+?\s*cpf\/cnpj\s*[^\n]+?\s*institui[çc][ãa]o\s+([^\n]+?)(?:\s*para|$)/i;
+      const pagadorBancoBMGMatch = normalizedText.match(pagadorBancoBMGPattern);
+      if (pagadorBancoBMGMatch && pagadorBancoBMGMatch[1]) {
+        pixData.pagadorBanco = pagadorBancoBMGMatch[1].trim();
+        console.log(`🏦 Banco Pagador (BMG) encontrado: ${pixData.pagadorBanco}`);
+      }
+
+      // Extrair Banco do Destinatário
+      const bancoBMGPattern = /para\s+[^\n]+?\s*cpf\/cnpj\s*[^\n]+?\s*institui[çc][ãa]o\s+([^\n]+?)(?:\s*descri[çc][ãa]o|$)/i;
+      const bancoBMGMatch = normalizedText.match(bancoBMGPattern);
+      if (bancoBMGMatch && bancoBMGMatch[1]) {
+        pixData.banco = bancoBMGMatch[1].trim();
+        console.log(`🏦 Banco Destino (BMG) encontrado: ${pixData.banco}`);
+      }
+
+      // Extrair ID da Transação
+      const idTransacaoBMGPattern = /id\s*da\s*transa[çc][ãa]o\s+([a-zA-Z0-9]+)/i;
+      const idTransacaoBMGMatch = normalizedText.match(idTransacaoBMGPattern);
+      if (idTransacaoBMGMatch && idTransacaoBMGMatch[1]) {
+        pixData.idTransacao = idTransacaoBMGMatch[1].trim();
+        console.log(`🆔 ID da Transação (BMG) encontrado: ${pixData.idTransacao}`);
+      }
+
+      // Extrair Observações (Descrição)
+      const observacoesBMGPattern = /descri[çc][ãa]o\s+([^\n]+?)(?:\s*canal|$)/i;
+      const observacoesBMGMatch = normalizedText.match(observacoesBMGPattern);
+      if (observacoesBMGMatch && observacoesBMGMatch[1]) {
+        pixData.observacoes = observacoesBMGMatch[1].trim();
+        console.log(`📝 Observações (BMG) encontradas: ${pixData.observacoes}`);
+      }
+
+      // Extrair Valor
+      const valorBMGPattern = /valor\s+r\$\s*(\d{1,3}(?:\.\d{3})*(?:,\d{2})?)/i;
+      const valorBMGMatch = normalizedText.match(valorBMGPattern);
+      if (valorBMGMatch && valorBMGMatch[1]) {
+        pixData.valor = parseFloat(valorBMGMatch[1].replace('.', '').replace(',', '.'));
+        console.log(`💰 Valor (BMG) encontrado: ${pixData.valor}`);
+      }
+
+      // Extrair Data e Hora
+      const dataHoraBMGPattern = /(\d{1,2})\/(\d{1,2})\/(\d{4})às(\d{1,2}):(\d{2})/i;
+      const dataHoraBMGMatch = normalizedText.match(dataHoraBMGPattern);
+      if (dataHoraBMGMatch) {
+        const [, day, month, year, hour, minute] = dataHoraBMGMatch;
+        pixData.data = `${day}/${month}/${year}`;
+        pixData.hora = `${hour}:${minute}`;
+        console.log(`📅 Data (BMG) encontrada: ${pixData.data}`);
+        console.log(`⏰ Hora (BMG) encontrada: ${pixData.hora}`);
+      }
+    }
+
+    // Lógica específica para Mercado Pago
+    if (normalizedText.includes('mercado pago') || normalizedText.includes('mercado pago')) {
+      console.log('Detectado comprovante do Mercado Pago. Iniciando extração específica...');
+
+      // Extrair Pagador (* De)
+      const pagadorMPPattern = /\*\s*de\s*([^\n]+?)(?:\s*cpf|\s*mercado pago|\s*agência|$)/i;
+      const pagadorMPMatch = normalizedText.match(pagadorMPPattern);
+      if (pagadorMPMatch && pagadorMPMatch[1]) {
+        pixData.pagador = pagadorMPMatch[1].trim();
+        console.log(`👤 Pagador (Mercado Pago) encontrado: ${pixData.pagador}`);
+      }
+
+      // Extrair Destinatário (* Para)
+      const destinatarioMPPattern = /\*\s*para\s*([^\n]+?)(?:\s*cpf|\s*itau|\s*unibanco|\s*agência|$)/i;
+      const destinatarioMPMatch = normalizedText.match(destinatarioMPPattern);
+      if (destinatarioMPMatch && destinatarioMPMatch[1]) {
+        pixData.destinatario = destinatarioMPMatch[1].trim();
+        console.log(`👤 Destinatário (Mercado Pago) encontrado: ${pixData.destinatario}`);
+      }
+
+      // Extrair Banco do Destinatário
+      const bancoMPPattern = /(itau unibanco s\.a\.|itau)/i;
+      const bancoMPMatch = normalizedText.match(bancoMPPattern);
+      if (bancoMPMatch && bancoMPMatch[1]) {
+        pixData.banco = 'Itaú';
+        console.log(`🏦 Banco (Mercado Pago) encontrado: ${pixData.banco}`);
+      }
+
+      // Extrair ID da Transação PIX
+      const idTransacaoMPPattern = /id de transa[çc][ãa]o pix\s*([a-zA-Z0-9]+)/i;
+      const idTransacaoMPMatch = normalizedText.match(idTransacaoMPPattern);
+      if (idTransacaoMPMatch && idTransacaoMPMatch[1]) {
+        pixData.idTransacao = idTransacaoMPMatch[1].trim();
+        console.log(`🆔 ID da Transação (Mercado Pago) encontrado: ${pixData.idTransacao}`);
+      }
+
+      // Extrair Data e Hora
+      const dataHoraMPPattern = /(?:quarta-feira|segunda-feira|terça-feira|quinta-feira|sexta-feira|sábado|domingo),\s*(\d{1,2})\s+de\s+(\w+)\s+de\s+(\d{4}),\s+às\s+(\d{1,2}):(\d{2}):(\d{2})/i;
+      const dataHoraMPMatch = normalizedText.match(dataHoraMPPattern);
+      if (dataHoraMPMatch) {
+        const [, day, monthStr, year, hour, minute, second] = dataHoraMPMatch;
+        const month = monthMap[monthStr.toLowerCase().substring(0, 3)] || monthStr;
+        pixData.data = `${day}/${month}/${year}`;
+        pixData.hora = `${hour}:${minute}:${second}`;
+        console.log(`📅 Data (Mercado Pago) encontrada: ${pixData.data}`);
+        console.log(`⏰ Hora (Mercado Pago) encontrada: ${pixData.hora}`);
+      }
+
+      // Extrair Valor (se presente)
+      const valorMPPattern = /(?:r\$\s*|valor\s*)(\d{1,3}(?:\.\d{3})*(?:,\d{2})?)/i;
+      const valorMPMatch = normalizedText.match(valorMPPattern);
+      if (valorMPMatch && valorMPMatch[1]) {
+        pixData.valor = parseFloat(valorMPMatch[1].replace('.', '').replace(',', '.'));
+        console.log(`💰 Valor (Mercado Pago) encontrado: ${pixData.valor}`);
+      }
+    }
+
+    // Identificar status
+    // Adicionar logs de depuração para verificar os valores antes de isProcessedConditionMet
+    writeDebugToFile(filename, `DEBUG: pagador: ${pixData.pagador}, destinatario: ${pixData.destinatario}, idTransacao: ${pixData.idTransacao}`);
+
+    const isProcessedConditionMet = pixData.pagador && pixData.destinatario && pixData.idTransacao;
+    writeDebugToFile(filename, `DEBUG: isProcessedConditionMet: ${isProcessedConditionMet}`);
+
+    if (isProcessedConditionMet) {
+      pixData.status = 'Processado';
+      writeDebugToFile(filename, `DEBUG: Status atualizado para: ${pixData.status}`);
+    } else {
+      pixData.status = 'PDF Escaneado - Processamento Manual Necessário';
+      writeDebugToFile(filename, `DEBUG: Status definido como: ${pixData.status}`);
+    }
 
   return pixData;
 
