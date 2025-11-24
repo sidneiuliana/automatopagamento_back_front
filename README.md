@@ -27,7 +27,7 @@ Sistema automatizado para extrair dados de pagamentos PIX de imagens e PDFs usan
 
 1. **Navegue até o diretório do projeto:**
    ```bash
-   cd D:\Sidnei\automatopagamento
+   cd D:\Sidnei\automatopagamento_back_front
    ```
 
 2. **Instale todas as dependências:**
@@ -47,13 +47,15 @@ npm run dev
 
 **Backend (Node.js):**
 ```bash
-npm run server
+cd server
+npm run dev
 ```
 Servidor estará disponível em: http://localhost:5000
 
 **Frontend (React):**
 ```bash
-npm run client
+cd client
+npm start
 ```
 Interface estará disponível em: http://localhost:3000
 

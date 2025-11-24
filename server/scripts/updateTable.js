@@ -2,11 +2,12 @@ const mysql = require('mysql2');
 require('dotenv').config();
 
 const dbConfig = {
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || 'Sepultura@123',
+  host: process.env.DB_HOST || 'ulianaedemarchi.mysql.uhserver.com',
+  user: process.env.DB_USER || 'sidneiuliana',
+  password: process.env.DB_PASSWORD || 'Sepultura@12',
   database: process.env.DB_NAME || 'ulianaedemarchi',
-  port: process.env.DB_PORT || 3306
+  port: process.env.DB_PORT || 3306,
+  charset: 'utf8mb4'
 };
 
 const connection = mysql.createConnection(dbConfig);

@@ -1053,3 +1053,17 @@ DEBUG: 2025-09-22_180143.pdf: DEBUG: General idTransacao match for pattern /(?:i
 DEBUG: 2025-09-22_180143.pdf: DEBUG: pagador: nome luciana aparecida ramos saccomano martins, destinatario: nome luiz augusto da silva, idTransacao: e003603052025092221014240fc4df0f
 DEBUG: 2025-09-22_180143.pdf: DEBUG: isProcessedConditionMet: e003603052025092221014240fc4df0f
 DEBUG: 2025-09-22_180143.pdf: DEBUG: Status atualizado para: Processado
+DEBUG: 2025-11-12_143234.pdf_2025-11-24T15-49-19-929Z: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["id transação e003603052025111217319c34d599239","e003603052025111217319c34d599239"]
+DEBUG: 2025-11-12_143234.pdf_2025-11-24T15-49-19-929Z: DEBUG: pagador: nome fabricio de freitas sousa, destinatario: nome luiz augusto da silva, idTransacao: e003603052025111217319c34d599239
+DEBUG: 2025-11-12_143234.pdf_2025-11-24T15-49-19-929Z: DEBUG: isProcessedConditionMet: e003603052025111217319c34d599239
+DEBUG: 2025-11-12_143234.pdf_2025-11-24T15-49-19-929Z: DEBUG: Status atualizado para: Processado
+DEBUG: 2025-11-12_143234.pdf_2025-11-24T15-53-18-854Z: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["id transação e003603052025111217319c34d599239","e003603052025111217319c34d599239"]
+DEBUG: 2025-11-12_143234.pdf_2025-11-24T15-53-18-854Z: DEBUG: pagador: nome fabricio de freitas sousa, destinatario: nome luiz augusto da silva, idTransacao: e003603052025111217319c34d599239
+DEBUG: 2025-11-12_143234.pdf_2025-11-24T15-53-18-854Z: DEBUG: isProcessedConditionMet: e003603052025111217319c34d599239
+DEBUG: 2025-11-12_143234.pdf_2025-11-24T15-53-18-854Z: DEBUG: Status atualizado para: Processado
+DEBUG: 1763735918230.pdf_2025-11-24T17-09-10-846Z: DEBUG: General idTransacao match for pattern /(?:id|1d)(?:\s+da)?\s+transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1763735918230.pdf_2025-11-24T17-09-10-846Z: DEBUG: General idTransacao match for pattern /(?:id|1d)\s+([a-zA-Z0-9]{20,})/i: null
+DEBUG: 1763735918230.pdf_2025-11-24T17-09-10-846Z: DEBUG: General idTransacao match for pattern /transa[çc][ãa]o\s+([a-zA-Z0-9]{20,})/i: ["transação e9040088820251121143450285155383","e9040088820251121143450285155383"]
+DEBUG: 1763735918230.pdf_2025-11-24T17-09-10-846Z: DEBUG: pagador: mauro mauricio ozorio, destinatario: luiz augusto da silva, idTransacao: e9040088820251121143450285155383
+DEBUG: 1763735918230.pdf_2025-11-24T17-09-10-846Z: DEBUG: isProcessedConditionMet: e9040088820251121143450285155383
+DEBUG: 1763735918230.pdf_2025-11-24T17-09-10-846Z: DEBUG: Status atualizado para: Processado

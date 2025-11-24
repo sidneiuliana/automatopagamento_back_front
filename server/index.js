@@ -109,12 +109,21 @@ app.post('/api/upload', upload.array('files', 10), async (req, res) => {
 
 // Endpoint para listar dados processados (do banco de dados)
 app.get('/api/data', async (req, res) => {
+  console.time('GET /api/data');
+  console.log('Requisição recebida: GET /api/data');
   try {
-    const pixTransactions = await databaseService.getProcessedPixTransactions();
+    const limit = parseInt(req.query.limit) || 100; // Padrão de 100 itens por página
+    const offset = parseInt(req.query.offset) || 0;
+    console.log(`Buscando dados processados com limit=${limit}, offset=${offset}`);
+    const pixTransactions = await databaseService.getProcessedPixTransactions(limit, offset);
+    console.log(`Dados processados encontrados: ${pixTransactions.length} itens.`);
     res.json(pixTransactions);
+    console.log('Resposta enviada: GET /api/data');
   } catch (error) {
     console.error('Erro ao buscar dados PIX:', error);
     res.status(500).json({ error: 'Erro ao buscar dados PIX' });
+  } finally {
+    console.timeEnd('GET /api/data');
   }
 });
 
@@ -171,7 +180,7 @@ function watchArquivosFolder() {
 }
 
 // Iniciar o servidor
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`Servidor rodando na porta ${PORT}`);
   console.log(`Acesse: http://localhost:${PORT}`);
   
@@ -179,7 +188,9 @@ app.listen(PORT, () => {
   watchArquivosFolder();
 
   // Criar tabela pix_transactions_no_process ao iniciar o servidor
-  databaseService.createPixTransactionsNoProcessTable();
+  await databaseService.createPixTransactionsNoProcessTable();
+  // Adicionar índices às tabelas
+  await databaseService.addIndexesToPixTables();
 });
 
 // Adicionar tratamento de exceções não capturadas
@@ -283,11 +294,20 @@ async function processFile(filePath) {
 
 // Endpoint para buscar dados de transações PIX não processadas
 app.get('/api/unprocessed-data', async (req, res) => {
+  console.time('GET /api/unprocessed-data');
+  console.log('Requisição recebida: GET /api/unprocessed-data');
   try {
-    const unprocessedPixData = await databaseService.getUnprocessedPixTransactions();
+    const limit = parseInt(req.query.limit) || 100; // Padrão de 100 itens por página
+    const offset = parseInt(req.query.offset) || 0;
+    console.log(`Buscando dados não processados com limit=${limit}, offset=${offset}`);
+    const unprocessedPixData = await databaseService.getUnprocessedPixTransactions(limit, offset);
+    console.log(`Dados não processados encontrados: ${unprocessedPixData.length} itens.`);
     res.json(unprocessedPixData);
+    console.log('Resposta enviada: GET /api/unprocessed-data');
   } catch (error) {
     console.error('Erro ao buscar dados de PIX não processados:', error);
     res.status(500).json({ error: 'Erro ao buscar dados de PIX não processados.' });
+  } finally {
+    console.timeEnd('GET /api/unprocessed-data');
   }
 });

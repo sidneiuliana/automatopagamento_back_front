@@ -1,0 +1,28 @@
+=================================
+Testando_e_Automatizando_Testes_de_API
+
+MYSQL ---->>mysql -u root -p     Sepultura@123
+GITHub --->>>sidneiuliana -->> $is4dmSUGITEstudos -->> Device authentication 76AD-9988
+GITHub --->>>uliana.sidnei@gmail.com -->> $is4dmUlianaDeMarchi
+GITHub --->>>fielmataosocios@gmail.com -->> fielmataosocios@2025
+			 ulisnaedemarchi@gmail.com -->> $is4dmUlianaDeMarchi
+Comandos gits
+
+	git status
+	git pull (pra cehcar se estou atualizado com a branche la da origen)
+	git branch (vou verificar que estou na main)
+	git checkout -b projeto-inicial
+	git branch (vejo que estou na branch projeto-inicial)
+	git status
+	git add . (adiciona todos os arquivos)
+	git status
+	git commit -m "Adicionei os arquivos iniciais e o primeiro teste de login"
+	git log (vejo que ja esta la o commit)
+	git branch (pegar o nome da branch)
+	git push origin projeto-inicial
+	
+	git checkout main (main foi atualizada)
+	git pull (atualizando a main)
+
+
+

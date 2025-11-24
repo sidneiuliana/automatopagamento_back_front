@@ -140,12 +140,12 @@ function App() {
   const loadExistingData = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await api.get<PixData[]>('/api/data');
+      const response = await api.get<PixData[]>('/api/data?limit=100&offset=0');
       const processedData = response.data;
       console.log('Dados processados recebidos do backend:', processedData);
       setPixData(processedData);
 
-      const unprocessedResponse = await api.get<PixData[]>('/api/unprocessed-data');
+      const unprocessedResponse = await api.get<PixData[]>('/api/unprocessed-data?limit=100&offset=0');
       const rawUnprocessedData = unprocessedResponse.data;
       console.log('Dados não processados recebidos do backend:', rawUnprocessedData);
       setUnprocessedPixData(rawUnprocessedData);

@@ -1,4 +1,4 @@
-const connection = require('../config/database');
+const { pool, query } = require('../config/database');
 const { writeDebugToFile } = require('./pixParser');
 
 /**
@@ -90,7 +90,7 @@ async function savePixTransaction(pixData) {
     writeDebugToFile(filename, `DEBUG: SQL Query: ${sql}`);
     writeDebugToFile(filename, `DEBUG: SQL Values: ${JSON.stringify(values)}`);
 
-    connection.query(sql, values, (err, result) => {
+    pool.query(sql, values, (err, result) => {
       if (err) {
         writeDebugToFile(filename, `ERROR: Erro ao salvar no banco (${tableName}): ${err.message}`);
         console.error(`Erro ao salvar no banco (${tableName}):`, err);
@@ -111,7 +111,7 @@ async function getAllPixTransactions() {
   return new Promise((resolve, reject) => {
     const sql = 'SELECT * FROM pix_transactions ORDER BY processed_at DESC';
     
-    connection.query(sql, (err, results) => {
+    pool.query(sql, (err, results) => {
       if (err) {
         console.error('Erro ao buscar transações:', err);
         reject(err);
@@ -126,38 +126,84 @@ async function getAllPixTransactions() {
  * Busca todas as transações PIX do banco da tabela pix_transactions.
  * @returns {Promise<Array>} - Lista de transações
  */
-async function getProcessedPixTransactions() {
-  return new Promise((resolve, reject) => {
-    const sql = 'SELECT * FROM pix_transactions ORDER BY processed_at DESC';
-    
-    connection.query(sql, (err, results) => {
-      if (err) {
-        console.error('Erro ao buscar transações processadas:', err);
-        reject(err);
-      } else {
-        resolve(results);
-      }
+async function getProcessedPixTransactions(limit, offset) {
+  console.time(`getProcessedPixTransactions (limit: ${limit}, offset: ${offset})`);
+  console.log(`Iniciando getProcessedPixTransactions com limit=${limit}, offset=${offset}`);
+  try {
+    let sql = 'SELECT * FROM pix_transactions ORDER BY processed_at DESC';
+    const params = [];
+
+    if (limit !== undefined && offset !== undefined) {
+      sql += ' LIMIT ? OFFSET ?';
+      params.push(limit, offset);
+    }
+
+    console.log(`Executando query para getProcessedPixTransactions: ${sql} com params: ${JSON.stringify(params)}`);
+    const queryStartTime = process.hrtime.bigint();
+
+    const queryPromise = query(sql, params);
+
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => {
+        reject(new Error('Timeout: Query de transações processadas excedeu 30 segundos.'));
+      }, 30000); // 30 segundos de timeout
     });
-  });
+
+    const results = await Promise.race([queryPromise, timeoutPromise]);
+    const queryEndTime = process.hrtime.bigint();
+    const queryDuration = Number(queryEndTime - queryStartTime) / 1_000_000; // Convert to milliseconds
+    console.log(`Query para getProcessedPixTransactions concluída em ${queryDuration.toFixed(2)} ms.`);
+    console.log(`getProcessedPixTransactions retornou ${results.length} resultados.`);
+    return results;
+
+  } catch (error) {
+    console.error('Erro ao buscar dados PIX:', error);
+    throw error;
+  } finally {
+    console.timeEnd(`getProcessedPixTransactions (limit: ${limit}, offset: ${offset})`);
+  }
 }
 
 /**
  * Busca todas as transações PIX do banco da tabela pix_transactions_no_process.
  * @returns {Promise<Array>} - Lista de transações não processadas
  */
-async function getUnprocessedPixTransactions() {
-  return new Promise((resolve, reject) => {
-    const sql = 'SELECT * FROM pix_transactions_no_process ORDER BY processed_at DESC';
-    
-    connection.query(sql, (err, results) => {
-      if (err) {
-        console.error('Erro ao buscar transações não processadas:', err);
-        reject(err);
-      } else {
-        resolve(results);
-      }
+async function getUnprocessedPixTransactions(limit, offset) {
+  console.time(`getUnprocessedPixTransactions (limit: ${limit}, offset: ${offset})`);
+  console.log(`Iniciando getUnprocessedPixTransactions com limit=${limit}, offset=${offset}`);
+  try {
+    let sql = 'SELECT * FROM pix_transactions_no_process ORDER BY processed_at DESC';
+    const params = [];
+
+    if (limit !== undefined && offset !== undefined) {
+      sql += ' LIMIT ? OFFSET ?';
+      params.push(limit, offset);
+    }
+
+    console.log(`Executando query para getUnprocessedPixTransactions: ${sql} com params: ${JSON.stringify(params)}`);
+    const queryStartTime = process.hrtime.bigint();
+
+    const queryPromise = query(sql, params);
+
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => {
+        reject(new Error('Timeout: Query de transações não processadas excedeu 30 segundos.'));
+      }, 30000); // 30 segundos de timeout
     });
-  });
+
+    const results = await Promise.race([queryPromise, timeoutPromise]);
+    const queryEndTime = process.hrtime.bigint();
+    const queryDuration = Number(queryEndTime - queryStartTime) / 1_000_000; // Convert to milliseconds
+    console.log(`Query para getUnprocessedPixTransactions concluída em ${queryDuration.toFixed(2)} ms.`);
+    console.log(`getUnprocessedPixTransactions retornou ${results.length} resultados.`);
+    return results;
+
+  } catch (error) {
+    console.error('Erro ao buscar dados PIX:', error);
+    throw error;
+  } finally {
+    console.timeEnd(`getUnprocessedPixTransactions (limit: ${limit}, offset: ${offset})`);
+  }
 }
 
 /**
@@ -174,7 +220,7 @@ async function getPixTransactionsByDateRange(startDate, endDate) {
       ORDER BY data_transferencia DESC
     `;
     
-    connection.query(sql, [startDate, endDate], (err, results) => {
+    pool.query(sql, [startDate, endDate], (err, results) => {
       if (err) {
         console.error('Erro ao buscar transações por período:', err);
         reject(err);
@@ -194,7 +240,7 @@ async function getPixTransactionsByBank(banco) {
   return new Promise((resolve, reject) => {
     const sql = 'SELECT * FROM pix_transactions WHERE banco = ? ORDER BY processed_at DESC';
     
-    connection.query(sql, [banco], (err, results) => {
+    pool.query(sql, [banco], (err, results) => {
       if (err) {
         console.error('Erro ao buscar transações por banco:', err);
         reject(err);
@@ -214,7 +260,7 @@ async function checkIfFileExists(filename) {
   return new Promise((resolve, reject) => {
     const sql = 'SELECT COUNT(*) AS count FROM pix_transactions WHERE filename = ?';
     // console.log(`DEBUG: checkIfFileExists - SQL: ${sql}, Filename: ${filename}`);
-    connection.query(sql, [filename], (err, results) => {
+    pool.query(sql, [filename], (err, results) => {
       if (err) {
         console.error('Erro ao verificar existência do arquivo no banco:', err);
         reject(err);
@@ -235,7 +281,7 @@ async function checkIfFileExists(filename) {
 async function deletePixTransactionByFilename(filename) {
   return new Promise((resolve, reject) => {
     const sql = 'DELETE FROM pix_transactions WHERE filename = ?';
-    connection.query(sql, [filename], (err, result) => {
+    pool.query(sql, [filename], (err, result) => {
       if (err) {
         console.error('Erro ao deletar transação do banco:', err);
         reject(err);
@@ -255,7 +301,7 @@ async function deletePixTransactionByFilename(filename) {
 async function getPixTransactionByFilename(filename) {
   return new Promise((resolve, reject) => {
     const sql = 'SELECT * FROM pix_transactions WHERE filename = ?';
-    connection.query(sql, [filename], (err, results) => {
+    pool.query(sql, [filename], (err, results) => {
       if (err) {
         console.error('Erro ao buscar transação por nome de arquivo:', err);
         reject(err);
@@ -354,7 +400,7 @@ async function updatePixTransaction(id, pixData) {
       id
     ];
 
-    connection.query(sql, values, (err, result) => {
+    pool.query(sql, values, (err, result) => {
       if (err) {
         console.error('Erro ao atualizar transação no banco:', err);
         reject(err);
@@ -390,7 +436,7 @@ async function createPixTransactionsNoProcessTable() {
     );
   `;
   return new Promise((resolve, reject) => {
-    connection.query(createTableSql, (err) => {
+    pool.query(createTableSql, (err) => {
       if (err) {
         console.error('Erro ao criar/verificar a tabela pix_transactions_no_process:', err);
         return reject(err);
@@ -409,7 +455,7 @@ async function createPixTransactionsNoProcessTable() {
 async function checkIfFileExistsInNoProcessTable(filename) {
   return new Promise((resolve, reject) => {
     const sql = 'SELECT COUNT(*) AS count FROM pix_transactions_no_process WHERE filename = ?';
-    connection.query(sql, [filename], (err, results) => {
+    pool.query(sql, [filename], (err, results) => {
       if (err) {
         console.error('Erro ao verificar existência do arquivo na tabela pix_transactions_no_process:', err);
         reject(err);
@@ -433,5 +479,45 @@ module.exports = {
   createPixTransactionsNoProcessTable,
   getProcessedPixTransactions,
   getUnprocessedPixTransactions,
-  checkIfFileExistsInNoProcessTable // Adicionar a nova função aqui
+  checkIfFileExistsInNoProcessTable,
+  addIndexesToPixTables // Adicionar a nova função aqui
 };
+
+/**
+ * Adiciona índices às tabelas pix_transactions e pix_transactions_no_process.
+ */
+async function addIndexesToPixTables() {
+  console.log('Iniciando verificação/criação de índices...');
+  const indexesToCreate = [
+    { indexName: 'idx_processed_at', tableName: 'pix_transactions', columnName: 'processed_at' },
+    { indexName: 'idx_filename', tableName: 'pix_transactions', columnName: 'filename' },
+    { indexName: 'idx_unprocessed_processed_at', tableName: 'pix_transactions_no_process', columnName: 'processed_at' },
+    { indexName: 'idx_unprocessed_filename', tableName: 'pix_transactions_no_process', columnName: 'filename' }
+  ];
+
+  async function checkIndexExists(tableName, indexName) {
+    const sql = `SHOW INDEXES FROM ${tableName} WHERE Key_name = ?`;
+    const results = await query(sql, [indexName]);
+    return results.length > 0;
+  }
+
+  try {
+    const createPromises = indexesToCreate.map(async (indexConfig) => {
+      const { indexName, tableName, columnName } = indexConfig;
+      const exists = await checkIndexExists(tableName, indexName);
+      if (exists) {
+        console.log(`Índice ${indexName} já existe na tabela ${tableName} (ignorado)`);
+        return;
+      }
+      const createSql = `CREATE INDEX ${indexName} ON ${tableName} (${columnName});`;
+      await query(createSql);
+      console.log(`✅ Índice ${indexName} criado na tabela ${tableName} com sucesso!`);
+    });
+
+    await Promise.all(createPromises);
+    console.log('✅ Todas as verificações e criações de índices foram concluídas com sucesso!');
+  } catch (err) {
+    console.error('Erro durante o processo de verificação/criação de índices:', err);
+    throw err;
+  }
+}
