@@ -6,6 +6,7 @@
 # dependencies
 /.pnp
 .pnp.js
+/arquivos
 
 # testing
 /coverage
