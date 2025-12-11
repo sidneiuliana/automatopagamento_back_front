@@ -9,7 +9,13 @@
     "client": "cd client && npm start",
     "install-all": "npm install && cd server && npm install && cd ../client && npm install"
   },
-  "keywords": ["pix", "ocr", "pdf", "pagamento", "automatizacao"],
+  "keywords": [
+    "pix",
+    "ocr",
+    "pdf",
+    "pagamento",
+    "automatizacao"
+  ],
   "author": "Sidnei",
   "license": "MIT",
   "devDependencies": {

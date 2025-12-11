@@ -5,7 +5,6 @@ import styled from 'styled-components';
 interface FileUploadProps {
   onFileUpload: (files: File[]) => void;
   loading: boolean;
-  onProcessFolder: () => void;
 }
 
 const UploadContainer = styled.div`
@@ -111,7 +110,7 @@ const LoadingSpinner = styled.div`
   }
 `;
 
-const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload, loading, onProcessFolder }) => {
+const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload, loading }) => {
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
       onFileUpload(acceptedFiles);
@@ -176,20 +175,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload, loading, onProces
           )}
         </Button>
         
-        {/* <Button 
-          variant="secondary" 
-          onClick={onProcessFolder}
-          disabled={loading}
-        >
-          {loading ? (
-            <>
-              <LoadingSpinner />
-              Processando...
-            </>
-          ) : (
-            'Processar Pasta Arquivos'
-          )}
-        </Button> */}
+
       </ButtonContainer>
     </UploadContainer>
   );
