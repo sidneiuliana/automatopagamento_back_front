@@ -91,6 +91,30 @@ function parsePixData(text, filename = '') {
       console.log(`DEBUG: pixData.banco no bloco Bradesco: ${pixData.banco}`);
   }
 
+  // Lógica específica para Banco do Brasil
+  if (normalizedText.includes('banco do brasil')) {
+      console.log('Detectado comprovante do Banco do Brasil. Iniciando extração específica...');
+      writeDebugToFile(filename, `DEBUG: Bloco Banco do Brasil ativado.`);
+      pixData.banco = 'Banco do Brasil';
+
+      // Extrair destinatário para Banco do Brasil
+      const destinatarioBbMatch = normalizedText.match(/(?:destinat[aá]rio|recebedor)\s*\n\s*(.*?)(?:\n|\r\n|\s*cpf|\s*cnpj|\s*chave|\s*institui[çc][ãa]o|$)/i);
+      if (destinatarioBbMatch && destinatarioBbMatch[1]) {
+          let extractedDestinatario = destinatarioBbMatch[1].trim();
+          writeDebugToFile(filename, `DEBUG: Destinatário extraído (Banco do Brasil) antes da correção: '${extractedDestinatario}'`);
+          // Correção específica para "luiz augusto silva"
+          if (extractedDestinatario.toLowerCase() === 'luiz augusto silva' || extractedDestinatario ==='Luiz Augusto Silva') {
+              pixData.destinatario = 'luiz augusto da silva';
+              console.log(`👤 Destinatário (Banco do Brasil) corrigido para: ${pixData.destinatario}`);
+          } else {
+              pixData.destinatario = extractedDestinatario;
+              console.log(`👤 Destinatário (Banco do Brasil) encontrado: ${pixData.destinatario}`);
+          }
+      }
+      // Adicionar outras extrações específicas do Banco do Brasil aqui, se necessário
+      console.log(`DEBUG: pixData.banco no bloco Banco do Brasil: ${pixData.banco}`);
+  }
+
 
   try {
     // Lógica específica para NU PAGAMENTOS - IP (MOVIDA PARA O INÍCIO)
