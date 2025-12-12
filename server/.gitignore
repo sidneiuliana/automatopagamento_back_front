@@ -2,3 +2,4 @@
 /server/node_modules
 /client/node_modules
 .env.WATCH_FOLDER
+/server/services/debug_log.txt
