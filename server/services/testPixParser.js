@@ -68,3 +68,21 @@ async function runTests() {
 }
 
 runTests();
+
+// --- Teste Bradesco ---
+console.log('\n--- Teste Bradesco ---');
+const bradescoText = `
+    COMPROVANTE DE PAGAMENTO PIX
+    BRADESCO
+    Data e Hora: 24/11/2023 - 12:00:00
+    Dados de quem pagou
+    NOME: Cliente Pagador Bradesco
+    CPF: ***.111.222-**
+    Dados de quem recebeu
+    NOME: Cliente Recebedor Bradesco
+    CPF: ***.333.444-**
+    Valor: R$ 500,00
+    ID da Transação: BRD1234567890ABCDEF1234567890
+`;
+const bradescoResult = parsePixData(bradescoText, 'bradesco_comprovante.txt');
+console.log('Resultado Bradesco:', bradescoResult);
