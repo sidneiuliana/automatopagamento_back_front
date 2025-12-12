@@ -5,7 +5,8 @@ MYSQL ---->>mysql -u root -p     Sepultura@123
 GITHub --->>>sidneiuliana -->> $is4dmSUGITEstudos -->> Device authentication 76AD-9988
 GITHub --->>>uliana.sidnei@gmail.com -->> $is4dmUlianaDeMarchi
 GITHub --->>>fielmataosocios@gmail.com -->> fielmataosocios@2025
-			 ulisnaedemarchi@gmail.com -->> $is4dmUlianaDeMarchi
+ulianaedemarchi@gmail.com -->> $is4dmUlianaDeMarchi
+
 Comandos gits
 
 	git status
@@ -25,7 +26,6 @@ Comandos gits
 	git pull (atualizando a main)
 
 
-
 -------------------------------------------------------- backend publicada no Render ----------------------------------------------
 uliana.sidnei@gmail.com --> appsociosfielmataoback -->> https://appsociosfielmataoback.onrender.com/
 
@@ -41,3 +41,5 @@ UPDATE ulianaedemarchi.products
 SET status = 'inactive'
 WHERE name = 'Teste';
 SET SQL_SAFE_UPDATES = 1;		<<<------------------------------------
+=======
+

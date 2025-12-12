@@ -109,6 +109,7 @@ function App() {
   const [selectedMonthYear, setSelectedMonthYear] = useState<string>('');
 
   const [uploadKey, setUploadKey] = useState<number>(0);
+  const [refreshKey, setRefreshKey] = useState<number>(0);
 
   const extractMonthsYears = useCallback((data: PixData[]): string[] => {
     console.log("Dados recebidos para extractMonthsYears:", data);
@@ -142,30 +143,32 @@ function App() {
     try {
       const response = await api.get<PixData[]>('/api/data');
       const processedData = response.data;
-      console.log('Dados processados recebidos do backend:', processedData);
+      console.log('DEBUG (loadExistingData): Dados processados recebidos do backend:', processedData);
       setPixData(processedData);
 
       const unprocessedResponse = await api.get<PixData[]>('/api/unprocessed-data');
       const rawUnprocessedData = unprocessedResponse.data;
-      console.log('Dados não processados recebidos do backend:', rawUnprocessedData);
+      console.log('DEBUG (loadExistingData): Dados não processados recebidos do backend:', rawUnprocessedData);
       setUnprocessedPixData(rawUnprocessedData);
 
       const allData = [...processedData, ...rawUnprocessedData];
-      console.log('Todos os dados para extração de meses/anos:', allData);
+      console.log('DEBUG (loadExistingData): Todos os dados combinados para extração de meses/anos:', allData);
       const extracted = extractMonthsYears(allData);
-      console.log('Meses/Anos disponíveis (ordenados):', extracted);
+      console.log('DEBUG (loadExistingData): Meses/Anos disponíveis (ordenados):', extracted);
       setAvailableMonthsYears(extracted);
 
       setMessage({ text: 'Dados carregados com sucesso!', type: 'success' });
+      setRefreshKey(prev => prev + 1); // Incrementa a chave para forçar a remontagem dos componentes de exibição
     } catch (error) {
       console.error('Erro ao carregar dados existentes:', error);
       setMessage({ text: 'Erro ao carregar dados existentes.', type: 'error' });
     } finally {
       setLoading(false);
     }
-  }, [setPixData, setUnprocessedPixData, setMessage, setLoading, extractMonthsYears, setAvailableMonthsYears]);
+  }, [setPixData, setUnprocessedPixData, setMessage, setLoading, extractMonthsYears, setAvailableMonthsYears, setRefreshKey]);
 
   useEffect(() => {
+    console.log('DEBUG (useEffect): useEffect em App.tsx disparado, chamando loadExistingData');
     loadExistingData();
   }, [loadExistingData]);
 
@@ -194,34 +197,21 @@ function App() {
 
       const formData = new FormData();
       filesToUpload.forEach(file => {
-        formData.append('files', file);
+        formData.append('file', file);
       });
 
-      const response = await api.post('/api/upload', formData, {
+      const response = await api.post('/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
       if (response.data.success) {
-        const newData = response.data.results.map((result: any) => ({
-          ...result.pixData,
-          filename: result.filename,
-          extractedText: result.extractedText,
-          processedAt: result.processedAt
-        }));
-
-        setPixData(prev => {
-          const updatedData = [...prev, ...newData];
-          console.log('Dados atualizados após upload para extração de meses/anos:', updatedData);
-          const extracted = extractMonthsYears(updatedData);
-          setAvailableMonthsYears(extracted);
-          return updatedData;
-        });
         setMessage({
           text: `${files.length} arquivo(s) processado(s) com sucesso!`,
           type: 'success'
         });
+        await loadExistingData(); // Recarrega os dados do banco após o upload
       }
     } catch (error: any) {
       console.error('Erro no upload:', error);
@@ -235,29 +225,7 @@ function App() {
       }
     };
 
-    const handleProcessFolder = async () => {
-    setLoading(true);
-    setMessage(null);
 
-    try {
-      const response = await api.post('/process-folder');
-      if (response.data.success) {
-        setMessage({
-          text: response.data.message || 'Processamento da pasta iniciado.',
-          type: 'success'
-        });
-        loadExistingData(); // Recarrega os dados do banco após o processamento da pasta
-      }
-    } catch (error: any) {
-      console.error('Erro ao processar pasta:', error);
-      setMessage({
-        text: error.response?.data?.error || 'Erro ao processar pasta',
-        type: 'error'
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const filteredPixData = pixData.filter(item => {
     if (!selectedMonthYear) return true;
@@ -289,6 +257,10 @@ function App() {
     }
   });
 
+  console.log('DEBUG (render): selectedMonthYear:', selectedMonthYear);
+  console.log('DEBUG (render): filteredPixData.length:', filteredPixData.length);
+  console.log('DEBUG (render): filteredUnprocessedPixData.length:', filteredUnprocessedPixData.length);
+
   return (
     <AppContainer>
       <Header>
@@ -310,7 +282,7 @@ function App() {
             key={uploadKey} // Adiciona a key para forçar a remontagem e limpar o campo
             onFileUpload={handleFileUpload}
             loading={loading}
-            onProcessFolder={handleProcessFolder}
+
           />
         </Section>
 
@@ -333,14 +305,14 @@ function App() {
               Faça upload de imagens ou PDFs de comprovantes PIX.
             </p>
           ) : (
-            <PixDataDisplay data={filteredPixData} />
+            <PixDataDisplay key={refreshKey} data={filteredPixData} />
           )}
           
           {filteredUnprocessedPixData.length > 0 && (
             <SectionTitle>Dados Não Processados ({filteredUnprocessedPixData.length})</SectionTitle>
           )}
           {filteredUnprocessedPixData.length > 0 && (
-            <PixDataDisplay data={filteredUnprocessedPixData} />
+            <PixDataDisplay key={refreshKey} data={filteredUnprocessedPixData} />
           )}
         </Section>
       </MainContent>
