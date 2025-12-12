@@ -56,8 +56,9 @@ function parsePixData(text, filename = '') {
       console.log('Detectado comprovante do NU PAGAMENTOS - IP. Iniciando extração específica...');
   
       // Extrair Origem Nome para pagador
-      const origemNomePattern = /origem nome\s*(.*?)(?:\s*institui[çc][ãa]o|\s*agencia|\s*conta|\s*cpf|$)/i;
-      const origemNomeMatch = normalizedText.match(origemNomePattern);
+      ```
+const origemNomePattern = /origem nome\s*(.*?)(?:s*institui[çc][ãa]o|s*agencia|s*conta|s*cpf|$)/i;
+       const origemNomeMatch = normalizedText.match(origemNomePattern);
       if (origemNomeMatch && origemNomeMatch[1]) {
         pixData.pagador = origemNomeMatch[1].trim();
         console.log(`👤 Pagador (NU PAGAMENTOS - IP) encontrado: ${pixData.pagador}`);
@@ -513,19 +514,14 @@ writeDebugToFile(filename, `DEBUG: Nubank idTransacaoMatch: ${JSON.stringify(idT
         console.log(`👤 Pagador (Banco do Brasil) encontrado: ${pixData.pagador}`);
       }
     }
-
-
-
+  } catch (error) {
+    console.error(`Erro ao analisar dados PIX do arquivo ${filename}:`, error);
+    writeDebugToFile(filename, `ERROR: ${error.message}`);
+    pixData.status = 'Erro no Processamento';
+    pixData.observacoes = `Erro: ${error.message}`;
+  }
 
   return pixData;
-
-  } catch (error) {
-    console.error('Erro ao analisar dados PIX:', error);
-    return {
-      error: 'Erro ao analisar dados PIX',
-      originalText: text.substring(0, 500)
-    };
-  }
 }
 
 /**
