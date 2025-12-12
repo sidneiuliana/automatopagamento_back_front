@@ -69,8 +69,9 @@ function parsePixData(text, filename = '') {
     if (normalizedText.includes('instituição nu pagamentos - ip')) {
       console.log('Detectado comprovante do NU PAGAMENTOS - IP. Iniciando extração específica...');
       // Extrair Origem Nome para pagador
-      const origemNomePattern = /origem nome\s*(.*?)(?:\s*institui[çc][ãa]o|\s*agencia|\s*conta|\s*cpf|$)/i;
-      const origemNomeMatch = normalizedText.match(origemNomePattern);
+      ```
+const origemNomePattern = /origem nome\s*(.*?)(?:s*institui[çc][ãa]o|s*agencia|s*conta|s*cpf|$)/i;
+       const origemNomeMatch = normalizedText.match(origemNomePattern);
       if (origemNomeMatch && origemNomeMatch[1]) {
         pixData.pagador = origemNomeMatch[1].trim();
         console.log(`👤 Pagador (NU PAGAMENTOS - IP) encontrado: ${pixData.pagador}`);
@@ -425,6 +426,65 @@ function parsePixData(text, filename = '') {
           writeDebugToFile(filename, `DEBUG: Banco (BMG) definido por inclusão de texto: ${pixData.banco}`);
         }
 
+        //console.log(`🔑 Tipo de Chave (Caixa) encontrado: ${pixData.tipoChave}`);
+      }
+    }
+
+    //console.log('pixData.banco antes da lógica Santander:', pixData.banco);
+    //console.log('normalizedText antes da lógica Santander:', normalizedText);
+    // Lógica específica para BCO SANTANDER (BRASIL) S.A.
+    if (pixData.banco === 'BCO SANTANDER (BRASIL) S.A.') {
+      console.log('Detectado comprovante do Santander. Iniciando extração específica...');
+      console.log('Normalized Text for Santander:', normalizedText);
+  
+      // Extrair Destinatário (Para)
+      const destinatarioSantanderPattern = /dados do recebedor\s*para\s*([^\n]+?)(?:\s*cpf|\s*cnpj|\s*chave|\s*institui[çc][ãa]o|$)/i;
+      const destinatarioSantanderMatch = normalizedText.match(destinatarioSantanderPattern);
+      if (destinatarioSantanderMatch && destinatarioSantanderMatch[1]) {
+        pixData.destinatario = destinatarioSantanderMatch[1].trim();
+        console.log(`👤 Destinatário (Santander) encontrado: ${pixData.destinatario}`);
+      }
+  
+      // Extrair Pagador (De)
+      const pagadorSantanderPattern = /dados do pagador\s*de\s*([^\n]+?)(?:\s*cpf|\s*cnpj|\s*institui[çc][ãa]o|\s*agencia|\s*conta|\s*data|\s*valor|\s*id|\s*transa[çc][ãa]o|\s*protocolo|\s*para|\s*informa[çc][ãa]o para o recebedor|$)/i;
+      const pagadorSantanderMatch = normalizedText.match(pagadorSantanderPattern);
+      if (pagadorSantanderMatch && pagadorSantanderMatch[1]) {
+        pixData.pagador = pagadorSantanderMatch[1].trim();
+        console.log(`👤 Pagador (Santander) encontrado: ${pixData.pagador}`);
+      }
+  
+      // Extrair Banco (Instituição) do pagador
+      const bancoPagadorSantanderPattern = /dados do pagador\s*(?:de\s*[^\n]+?\s*)?institui[çc][ãa]o\s*([^\n]+?)(?:\s*comprovante|$)/i;
+      const bancoPagadorSantanderMatch = normalizedText.match(bancoPagadorSantanderPattern);
+      if (bancoPagadorSantanderMatch && bancoPagadorSantanderMatch[1]) {
+        pixData.banco = bancoPagadorSantanderMatch[1].trim();
+        console.log(`🏦 Banco do Pagador (Santander) encontrado: ${pixData.banco}`);
+      }
+  
+      // Extrair Observações (Informação para o recebedor)
+      const observacoesSantanderPattern = /informa[çc][ãa]o para o recebedor\s*([^\n]+?)(?:\s*forma de pagamento|\s*ag\s*\d+|\s*cpf|\s*cnpj|\s*institui[çc][ãa]o|\s*agencia|\s*conta|\s*data|\s*valor|\s*id|\s*transa[çc][ãa]o|\s*protocolo|\s*para|\s*de|$)/i;
+      const observacoesSantanderMatch = normalizedText.match(observacoesSantanderPattern);
+      if (observacoesSantanderMatch && observacoesSantanderMatch[1]) {
+        pixData.observacoes = observacoesSantanderMatch[1].trim();
+        console.log(`📝 Observações (Santander) encontradas: ${pixData.observacoes}`);
+      }
+    }
+
+    // Lógica específica para Banco do Brasil
+    if (pixData.banco === 'Banco do Brasil') {
+      console.log('Detectado comprovante do Banco do Brasil. Iniciando extração específica...');
+      console.log('Normalized Text for Banco do Brasil:', normalizedText);
+  
+      // Extrair Pagador
+      const pagadorBBPattern = /pagador\s*([^\n]+?)(?:\s*cpf|\s*cnpj|\s*institui[çc][ãa]o|\s*agencia|\s*conta|\s*data|\s*valor|\s*id|\s*transa[çc][ãa]o|\s*protocolo|$)/i;
+      const pagadorBBMatch = normalizedText.match(pagadorBBPattern);
+      if (pagadorBBMatch && pagadorBBMatch[1]) {
+        pixData.pagador = pagadorBBMatch[1].trim();
+        console.log(`👤 Pagador (Banco do Brasil) encontrado: ${pixData.pagador}`);
+      }
+    }
+
+
         // Extrair Pagador (ajustado para capturar nomes concatenados)
         const pagadorBmgPattern = /de\s*([a-zA-Z\s]+?)(?:cpf\/?cnpj|cpf|cnpj|chave|institui[çc][ãa]o|banco|$)/i;
         const pagadorBmgMatch = normalizedText.match(pagadorBmgPattern);
@@ -451,7 +511,6 @@ function parsePixData(text, filename = '') {
         }
       }
     }
-
   } catch (error) {
     console.error(`Erro ao analisar dados PIX do arquivo ${filename}:`, error);
     writeDebugToFile(filename, `ERROR: ${error.message}`);
